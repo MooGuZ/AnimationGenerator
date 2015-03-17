@@ -1,0 +1,52 @@
+<config name="Test-March14">
+  <model name="First" code="test">
+  	<texture name="PinkGaussian">pink_gaussian.png</texture>
+  	<texture name="PinkUnify">pink_unify.png</texture>
+    <surface type="Gaussian">
+      <position>-2,-2,-2</position>
+      <normal>1,1,1</normal>
+      <curvature>5</curvature>
+      <height>3</height>
+      <radius>3</radius>
+	    <texture>PinkGaussian</texture>
+    </surface>
+    <surface type="Gaussian">
+      <position>5,5,5</position>
+      <normal>-1,-1,-1</normal>
+      <curvature>-5</curvature>
+      <height>3</height>
+      <radius>3</radius>
+  	  <texture>PinkUnify</texture>
+    </surface>
+  </model>
+  <model name="Second" code="test">
+    <surface type="Sphere">
+      <position>3,-3,0</position>
+      <normal>-1,1,0</normal>
+      <curvature>0.4</curvature>
+      <angle>180</angle>
+	    <texture>PinkUnify</texture>
+    </surface>
+    <surface type="Sphere">
+      <position>-6,6,0</position>
+      <normal>1,-1,0</normal>
+      <curvature>-0.4</curvature>
+      <angle>270</angle>
+	    <texture>PinkGaussian</texture>
+    </surface>
+    <surface type="Sphere">
+      <position>0,0,3</position>
+      <normal>0,0,-1</normal>
+      <curvature>0.4</curvature>
+      <angle>90</angle>
+	    <texture>PinkUnify</texture>
+    </surface>
+    <surface type="Sphere">
+      <position>0,0,-8</position>
+      <normal>0,0,1</normal>
+      <curvature>-0.4</curvature>
+      <angle>360</angle>
+	    <texture>PinkGaussian</texture>
+    </surface>
+  </model>
+</config>

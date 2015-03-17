@@ -1,0 +1,8 @@
+# ignore alias of SketchUp Plugin Folder in Mac OS X
+SketchUp\ Plugins\ Folder
+
+# ignore 'depreciate' folder that containing out-of-date files
+**/depreciate/
+
+# ignore texture files that take a lot of space
+**/texture/
