@@ -24,6 +24,8 @@ module AnimationGenerator
   DRAWMETHOD  = :surface
   # maximum segment number of a drawing element
   MAX_SEG_NUM = 30 unless defined? MAX_SEG_NUM
+  # list of available surface type
+  SURFTYPE = ['gaussian','sphere']
   # parameter list os different type of surface
   SURFPARAM = Hash.new unless defined? SURFPARAM
   SURFPARAM["gaussian"] = ["curvature","height","radius"]

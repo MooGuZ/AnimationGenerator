@@ -4,8 +4,8 @@ require "su_animgen/settings"
 
 # this file contains all the specific surface drawing method of AnimationGenerator
 module AnimationGenerator
-  # Class Start: ModelConfig
-  class ModelConfig    
+  # Class Start: SurfConfig
+  class SurfConfig    
     # Gaussian Surface
     private
     def gaussian(params, thickness, accuracy)
@@ -110,58 +110,6 @@ module AnimationGenerator
       return curvPts, range 
     end
     
-    # surface drawing function works like a drawing engine for gerneral surfaces
-    private
-    def surfdraw(cfunc, pos, norm, params, thickness = THICKNESS, accuracy = ACCURACY)
-      # construct corresponding sketchup objects
-      pos  = Geom::Point3d.new(pos)
-      norm = Geom::Vector3d.new(norm).normalize
-      
-      # ensure every parameter for calculation is Float
-      thichness = Float(thickness)
-      accuracy  = Float(accuracy)
-      
-      # calculate closed curve points in canonical space
-      curvPts, range = cfunc.call(params, thickness, accuracy)
-      
-      # define transformation from canonical space to sketchup space
-      trans = Geom::Transformation.new(
-        pos - norm.transform(Geom::Transformation.scaling(curvPts[0].z)), 
-        norm)
-      # transform curve points to sketchup space
-      curvPts = curvPts.map {|p| p.transform(trans)}
-      
-      # create a group for this surface
-      grp = Sketchup.active_model.entities.add_group
-      # get entities handle of sketchup
-      ents = grp.entities
-      # generate closed curve in sketchup space
-      curv = ents.add_curve(curvPts)
-      # generate face based on the curve
-      cface = ents.add_face(curv)
-      # generate circle as following edges
-      fedges = ents.add_circle(
-        Geom::Point3d.new([0,0,0]).transform(trans),
-        norm,
-        range * 1.1)
-      # use followme to generate curvature shape
-      cface.followme(fedges)
-      # remove follow edges from model
-      ents.erase_entities(fedges)
-      
-      # find a sample face to determin the face direction
-      sface = ents.find do |e|
-        e.is_a?(Sketchup::Face) && e.vertices.map{|v| v.position}.include?(pos)
-      end
-      # reverse faces if in opposite direction
-      if sface.normal.dot(norm) < 0
-        ents.each {|e| e.reverse! if e.is_a?(Sketchup::Face)}
-      end
-      
-      # return the surface group
-      return grp
-    end
-    
   end
-  # Class End: ModelConfig
+  # Class End: SurfConfig
 end

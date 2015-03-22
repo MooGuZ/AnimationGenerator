@@ -10,7 +10,9 @@
 require "sketchup"
 # load settings
 require "su_animgen/settings"
-# load ModelConfig class definition
-require "su_animgen/modelconfig"
+# load SurfConfig class definition
+require "su_animgen/surfconfig"
 # load surface drawing methods
 require "su_animgen/surfdraw"
+# load ModelConfig class definition
+require "su_animgen/modelconfig"
