@@ -6,3 +6,6 @@ SketchUp\ Plugins\ Folder
 
 # ignore texture files that take a lot of space
 **/texture/
+
+# ignore .DS_Store files
+**/.DS_Store
