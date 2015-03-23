@@ -42,7 +42,7 @@ module AnimationGenerator
           # assigne texture file to it
           mt.texture = File.exist?(t.text) \
                        ? t.text 
-                       : File.absolute_path(t.text, AGPATH["texture"])
+                       : File.absolute_path(t.text, PATH["texture"])
           # show information
           puts "Loaded Texture : #{tname}"
         end
@@ -64,7 +64,7 @@ module AnimationGenerator
       # load function to load model configurations from xml file
       def load(fname)
         # search for configuration file
-        fname = File.absolute_path(fname, AGPATH["config"]) unless File.exist?(fname)
+        fname = File.absolute_path(fname, PATH["config"]) unless File.exist?(fname)
         
         # parsing document by REXML lib
         doc = REXML::Document.new File.new(fname)

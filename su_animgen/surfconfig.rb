@@ -1,5 +1,5 @@
 require "sketchup"
-require "recml/document"
+require "rexml/document"
 
 require "su_animgen/settings"
 require "su_animgen/surfdraw"
@@ -25,7 +25,7 @@ module AnimationGenerator
       @normal   = elist["normal"].text.split(",").map{|s| s.to_f}
       # other parameters
       @params = Hash.new
-      SURFPARAMS[@type].each {|key| params[key] = elist[key].text.to_f}
+      SURFPARAM[@type].each {|key| params[key] = elist[key].text.to_f}
       # initialize sketchup obj to nil
       @suobj  = nil
     end
@@ -85,7 +85,7 @@ module AnimationGenerator
         # get material handle of SketchUp
         mts = Sketchup.active_model.materials
         # check existance of material with required texture
-        raise ArgumentError, "texture #{tname} not found!" unless mt = mts[tname]
+        raise ArgumentError, "texture #{@texture} not found!" unless mt = mts[@texture]
         # set each face in object with specific material
         @suobj.entities.each {|e| e.material = mt if e.is_a?(Sketchup::Face)}
       end

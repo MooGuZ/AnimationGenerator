@@ -1,18 +1,19 @@
 # this file contains all the settings utilized in AnimationGenerator
 module AnimationGenerator
-  
   # file system information
   # -----------------------
-  AGPATH = Hash.new unless defined? AGPATH
+  PATH = Hash.new unless defined? PATH
   # path of this setting file
-  AGPATH["setting"]  = File.expand_path(__FILE__)
+  PATH["setting"]  = File.expand_path(__FILE__)
   # path of SketchUp plugin folder
-  AGPATH["suplugin"] = File.absolute_path("..",File.dirname(AGPATH["setting"]))
+  PATH["suplugin"] = File.absolute_path("..",File.dirname(PATH["setting"]))
   # path of configuration files
-  AGPATH["config"]   = File.absolute_path("su_animgen/config",AGPATH["suplugin"])
+  PATH["config"]   = File.absolute_path("su_animgen/config",PATH["suplugin"])
   # path of texture file folder
-  AGPATH["texture"]  = File.absolute_path("su_animgen/texture",AGPATH["suplugin"])
+  PATH["texture"]  = File.absolute_path("su_animgen/texture",PATH["suplugin"])
   
+  # initialize default values hash table
+  DEFAULT = Hash.new unless defined? DEFAULT
   
   # surface related information
   # ---------------------------
