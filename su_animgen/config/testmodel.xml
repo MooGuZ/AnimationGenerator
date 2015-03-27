@@ -1,7 +1,9 @@
 <config name="Test-March14">
-  <model name="First" code="test">
-  	<texture name="PinkGaussian">pink_gaussian.png</texture>
-  	<texture name="PinkUnify">pink_unify.png</texture>
+  <model name="Debug" code="First">
+  
+		<texture name="PinkGaussian">pink_gaussian.png</texture>
+  	<texture name="PinkUniform">pink_uniform.png</texture>
+		
     <surface type="Gaussian">
       <position>-2,-2,-2</position>
       <normal>1,1,1</normal>
@@ -10,23 +12,40 @@
       <radius>3</radius>
 	    <texture>PinkGaussian</texture>
     </surface>
+		
     <surface type="Gaussian">
       <position>5,5,5</position>
       <normal>-1,-1,-1</normal>
       <curvature>-5</curvature>
       <height>3</height>
       <radius>3</radius>
-  	  <texture>PinkUnify</texture>
+  	  <texture>PinkUniform</texture>
     </surface>
-  </model>
-  <model name="Second" code="test">
+		
+		<camera aspratio="1.0" fov="30" imwidth="35.0">
+			<animation trajectory="line" code="test">
+				<eye>0,0,0</eye>
+				<target>-2,-2,-2</target>
+				<up>0,0,1</up>
+				<direction>1,0,0</direction>
+				<velocity>-0.5,0.5,1,2</velocity>
+			</animation>
+		</camera>
+	</model>
+	
+  <model name="Debug" code="Second">
+		
+		<texture name="PinkGaussian">pink_gaussian.png</texture>
+  	<texture name="PinkUniform">pink_uniform.png</texture>
+		
     <surface type="Sphere">
       <position>3,-3,0</position>
       <normal>-1,1,0</normal>
       <curvature>0.4</curvature>
       <angle>180</angle>
-	    <texture>PinkUnify</texture>
+	    <texture>PinkUniform</texture>
     </surface>
+		
     <surface type="Sphere">
       <position>-6,6,0</position>
       <normal>1,-1,0</normal>
@@ -34,13 +53,15 @@
       <angle>270</angle>
 	    <texture>PinkGaussian</texture>
     </surface>
+		
     <surface type="Sphere">
       <position>0,0,3</position>
       <normal>0,0,-1</normal>
       <curvature>0.4</curvature>
       <angle>90</angle>
-	    <texture>PinkUnify</texture>
+	    <texture>PinkUniform</texture>
     </surface>
+		
     <surface type="Sphere">
       <position>0,0,-8</position>
       <normal>0,0,1</normal>
@@ -48,5 +69,15 @@
       <angle>360</angle>
 	    <texture>PinkGaussian</texture>
     </surface>
+		
+		<camera aspratio="1.0" fov="30" imwidth="35">
+			<animation trajectory="line" code="test">
+				<eye>0,0,0</eye>
+				<target>-6,6,0</target>
+				<up>0,0,1</up>
+				<direction>1,0,0</direction>
+				<velocity>0.5</velocity>
+			</animation>
+		</camera>
   </model>
 </config>

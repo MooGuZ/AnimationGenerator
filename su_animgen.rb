@@ -16,3 +16,11 @@ require "su_animgen/surfconfig"
 require "su_animgen/surfdraw"
 # load ModelConfig class definition
 require "su_animgen/modelconfig"
+# load CamConfig class definition
+require "su_animgen/camconfig"
+# load AGAnimation class definition
+require "su_animgen/aganimation"
+# load trajectory calculating methods
+require "su_animgen/trajcalc"
+# load CSVTable class definition
+require "su_animgen/csvtable"

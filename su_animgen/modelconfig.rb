@@ -1,26 +1,16 @@
 require "sketchup"
-require "forwardable"
+require 'fileutils'
 require "rexml/document"
 
 require "su_animgen/settings"
 require "su_animgen/surfconfig"
+require "su_animgen/camconfig"
 
 module AnimationGenerator
-  # define structure SurfConfig
-  SurfConfig = Struct.new(
-    :type, :texture, :position,  
-    :normal, :params, :suobj
-  ) unless defined? SurfConfig
-    
   # Class Start: ModelConfig
   class ModelConfig
-    extend Forwardable
-    
     # public attributions
-    attr :name, :surflist, :code
-    
-    # define delegators
-    def_delegators :@surflist, :each, :map, :<<    
+    attr :name, :code, :camera, :surflist
     
     # constructor: from xml branch
     def initialize(node)
@@ -28,7 +18,7 @@ module AnimationGenerator
       # read name
       @name = node.attributes["name"]
       # read code
-      @code = node.attributes["code"]
+      @code = node.attributes["code"].upcase
       # ------- load texture -------
       # get material handle of SketchUp
       mts = Sketchup.active_model.materials
@@ -39,10 +29,11 @@ module AnimationGenerator
         unless mts[tname]
           # add a new material
           mt = mts.add(tname)
+          # search for texture file
+          tfile = File.exist?(t.text) ? t.text : File.expand_path(t.text)
+          tfile = File.join(PATH["texture"], t.text) unless File.exist?(tfile)
           # assigne texture file to it
-          mt.texture = File.exist?(t.text) \
-                       ? t.text 
-                       : File.absolute_path(t.text, PATH["texture"])
+          mt.texture = tfile
           # show information
           puts "Loaded Texture : #{tname}"
         end
@@ -52,6 +43,10 @@ module AnimationGenerator
       @surflist = Array.new
       # read surface one by one
       node.elements.each("surface") {|s| @surflist << SurfConfig.new(s)}
+      # ------- load camera -------
+      @camera = CamConfig.new(node.elements["camera"])
+      # ------- show information -------
+      puts "Loaded Model   : #{@name}"
     end
     
     # draw surface in SketchUp space
@@ -59,12 +54,29 @@ module AnimationGenerator
       @surflist.each {|surf| surf.draw}
     end
     
+    # generate animation
+    def animate
+      # draw the model at first if necessary
+      unless @surflist.map{|surf| !surf.suobj.nil? && surf.suobj.valid?}.all?
+        Sketchup.active_model.entities.clear!
+        draw
+      end
+      # generate output folder name
+      outfd = File.join(PATH["output"], Time.now.strftime("%Y%m%d"), @code)
+      # start animation
+      @camera.animate(outfd)
+    end
+    
     # define class method as the file system interface
     class << self
       # load function to load model configurations from xml file
       def load(fname)
         # search for configuration file
-        fname = File.absolute_path(fname, PATH["config"]) unless File.exist?(fname)
+        unless File.exist?(fname)
+          fname = File.exist?(File.expand_path(fname)) ?
+                  File.expand_path(fname) :
+                  File.join(PATH["config"], fname)
+        end
         
         # parsing document by REXML lib
         doc = REXML::Document.new File.new(fname)

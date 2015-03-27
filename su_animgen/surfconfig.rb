@@ -25,7 +25,7 @@ module AnimationGenerator
       @normal   = elist["normal"].text.split(",").map{|s| s.to_f}
       # other parameters
       @params = Hash.new
-      SURFPARAM[@type].each {|key| params[key] = elist[key].text.to_f}
+      SURFPARAM[@type].each {|key| @params[key] = elist[key].text.to_f}
       # initialize sketchup obj to nil
       @suobj  = nil
     end
