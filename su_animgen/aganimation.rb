@@ -1,6 +1,7 @@
 require "sketchup"
 require "rexml/document"
 
+require "su_animgen/tools"
 require "su_animgen/settings"
 
 module AnimationGenerator
@@ -24,14 +25,14 @@ module AnimationGenerator
       # get element list
       elist = node.elements
       # load information of start position
-      @eye    = elist["eye"].text.split(",").map{|s| s.to_f}
-      @target = elist["target"].text.split(",").map{|s| s.to_f}
-      @up     = elist["up"].text.split(",").map{|s| s.to_f}
+      @eye    = elist["eye"].text.to_a
+      @target = elist["target"].text.to_a
+      @up     = elist["up"].text.to_a
       # load trajectory specific parameters
       @params = Hash.new
       TRAJPARAM[@trajectory].each do |key|
         @params[key] = elist[key].text.include?(',') ?
-                       elist[key].text.split(',').map{|s| s.to_f} :
+                       elist[key].text.to_a :
                        elist[key].text.to_f
       end
       # initialize other fields
@@ -83,7 +84,7 @@ module AnimationGenerator
           end
         end
         # initialize combination array
-        pcomb = nil
+        pcomb = Array.new
         # create combination
         plist.each {|p| pcomb = combination(pcomb,p)}
         # ------- apply every paramter combination -------
@@ -140,27 +141,7 @@ module AnimationGenerator
       return false
     end
     
-    # combination : create all combination
-    def combination(arrA,arrB)
-      if arrA.nil?
-        return arrB
-      elsif arrB.nil?
-        return arrA
-      else
-        # create new array for combination
-        comb = Array.new
-        # traverse all combination of A and B
-        arrA.each do |a|
-          arrB.each do |b|
-            comb << [a,b]
-          end
-        end
-        # return combination
-        return comb
-      end
-    end
-    
-    private :decomposable?, :combination, :intersected?
+    private :decomposable?, :intersected?
     
   end
   # class end: AGAnimation

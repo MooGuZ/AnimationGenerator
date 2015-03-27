@@ -1,6 +1,7 @@
 require "sketchup"
 require "rexml/document"
 
+require "su_animgen/tools"
 require "su_animgen/settings"
 require "su_animgen/surfdraw"
 
@@ -21,8 +22,8 @@ module AnimationGenerator
       elist = node.elements
       # must-have parameters of a surface
       @texture  = elist["texture"].text.downcase
-      @position = elist["position"].text.split(",").map{|s| s.to_f}
-      @normal   = elist["normal"].text.split(",").map{|s| s.to_f}
+      @position = elist["position"].text.to_a
+      @normal   = elist["normal"].text.to_a
       # other parameters
       @params = Hash.new
       SURFPARAM[@type].each {|key| @params[key] = elist[key].text.to_f}

@@ -2,6 +2,7 @@ require "sketchup"
 require 'fileutils'
 require "rexml/document"
 
+require "su_animgen/tools"
 require "su_animgen/settings"
 require "su_animgen/surfconfig"
 require "su_animgen/camconfig"

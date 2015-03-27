@@ -3,11 +3,9 @@ require "forwardable"
 
 # define array converter
 CSV::Converters[:array] = lambda do |field|
-  if field && field.match(/^\[[0-9,]*\]$/)
-    return field.gsub(/[\[\]]/,'').split(',').map{|s| s.to_f}
-  else
-    return field
-  end
+  return field && field.match(/^\[[0-9,]*\]$/) ? 
+         field.gsub(/[\[ \]]/,'').split(',').map {|s| s.to_f} : 
+         field
 end
 
 # class start: CSVTable

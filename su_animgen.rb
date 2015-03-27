@@ -8,6 +8,8 @@
 
 # load sketchup library
 require "sketchup"
+# load tools
+require "su_animgen/tools"
 # load settings
 require "su_animgen/settings"
 # load SurfConfig class definition
