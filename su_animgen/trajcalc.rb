@@ -1,8 +1,10 @@
 require "sketchup"
 
 module AnimationGenerator
-  # class start: AGAnimation
-  class AGAnimation
+  # class start: AnimGen
+  class AnimGen
+    private
+    
     # trajectory : line
     def line(eye, target, up, params, ind)
       # regularize input parameters
@@ -17,6 +19,7 @@ module AnimationGenerator
       # return new positions
       return new_eye, target, up
     end
+    
   end
-  # class end: AGAnimation
+  # class end: AnimGen
 end

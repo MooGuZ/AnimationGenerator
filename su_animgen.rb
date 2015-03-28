@@ -10,7 +10,9 @@
 require "sketchup"
 # load tools
 require "su_animgen/tools"
-# load settings
+# load CSVTable class definition
+require "su_animgen/csvtable"
+# load settings of Animation Generator
 require "su_animgen/settings"
 # load SurfConfig class definition
 require "su_animgen/surfconfig"
@@ -20,9 +22,10 @@ require "su_animgen/surfdraw"
 require "su_animgen/modelconfig"
 # load CamConfig class definition
 require "su_animgen/camconfig"
-# load AGAnimation class definition
-require "su_animgen/aganimation"
+# load AnimConfig class definition
+require "su_animgen/animconfig"
+# load AnimGen class definition
+require "su_animgen/animgen"
 # load trajectory calculating methods
 require "su_animgen/trajcalc"
-# load CSVTable class definition
-require "su_animgen/csvtable"
+

@@ -6,8 +6,8 @@ require "su_animgen/settings"
 module AnimationGenerator
   # Class Start: SurfConfig
   class SurfConfig    
-    # Gaussian Surface
     private
+    # Gaussian Surface
     def gaussian(params, thickness, accuracy)
       # get parameters from Hash
       curvature = Float(params["curvature"])
@@ -55,7 +55,6 @@ module AnimationGenerator
     end
     
     # Sphere with arbitraty angle
-    private
     def sphere(params, thickness, accuracy)
       # get parameters from Hash
       curvature = Float(params["curvature"])

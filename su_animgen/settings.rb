@@ -60,7 +60,7 @@ module AnimationGenerator
   # animation information table parameters
   ANIMINFO = Hash.new unless defined? ANIMINFO
   ANIMINFO["filename"] = "anim-info.csv"
-  ANIMINFO["header"]   = [:code, :trajectory, :eye, :target, :up, :direction, :velocity]
+  ANIMINFO["header"]   = ["code", "time", "trajectory", "eye", "target", "up", "direction", "velocity"]
   
   # other settings
   # --------------

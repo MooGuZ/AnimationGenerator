@@ -1,5 +1,5 @@
 <config name="Test-March14">
-  <model name="Debug" code="First">
+  <model name="Gaussian-Surfaces">
   
 		<texture name="PinkGaussian">pink_gaussian.png</texture>
   	<texture name="PinkUniform">pink_uniform.png</texture>
@@ -23,7 +23,7 @@
     </surface>
 		
 		<camera aspratio="1.0" fov="30" imwidth="35.0">
-			<animation trajectory="line" code="test">
+			<animation trajectory="line">
 				<eye>0,0,0</eye>
 				<target>-2,-2,-2</target>
 				<up>0,0,1</up>
@@ -33,7 +33,7 @@
 		</camera>
 	</model>
 	
-  <model name="Debug" code="Second">
+  <model name="Sphere-Surfaces">
 		
 		<texture name="PinkGaussian">pink_gaussian.png</texture>
   	<texture name="PinkUniform">pink_uniform.png</texture>
@@ -71,7 +71,7 @@
     </surface>
 		
 		<camera aspratio="1.0" fov="30" imwidth="35">
-			<animation trajectory="line" code="test">
+			<animation trajectory="line">
 				<eye>0,0,0</eye>
 				<target>-6,6,0</target>
 				<up>0,0,1</up>

@@ -11,15 +11,12 @@ module AnimationGenerator
   # Class Start: ModelConfig
   class ModelConfig
     # public attributions
-    attr :name, :code, :camera, :surflist
+    attr :name, :camera, :surflist
     
     # constructor: from xml branch
     def initialize(node)
       # ------- fundamental info -------
-      # read name
       @name = node.attributes["name"]
-      # read code
-      @code = node.attributes["code"].upcase
       # ------- load texture -------
       # get material handle of SketchUp
       mts = Sketchup.active_model.materials
@@ -62,8 +59,10 @@ module AnimationGenerator
         Sketchup.active_model.entities.clear!
         draw
       end
-      # generate output folder name
-      outfd = File.join(PATH["output"], Time.now.strftime("%Y%m%d"), @code)
+      # output folder name
+      outfd = File.join(PATH["output"], Time.now.strftime("%Y%m%d"), @name.upcase)
+      # generate output folder
+      FileUtils.mkdir_p(outfd)
       # start animation
       @camera.animate(outfd)
     end

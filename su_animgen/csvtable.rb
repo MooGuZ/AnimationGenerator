@@ -35,7 +35,7 @@ class CSVTable
     # read csv file with header
     table = CSV.read(fname, 
               :headers => true, 
-              :header_converters => :symbol, 
+              :header_converters => :downcase, 
               :converters => [:all,:array],
               :return_headers => false)
     return CSVTable.new(table)
