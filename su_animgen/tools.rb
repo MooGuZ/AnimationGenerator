@@ -4,6 +4,7 @@
 # Mar 27, 2015
 
 require "digest"
+require "sketchup"
 
 module AnimationGenerator 
   # convert string to array
@@ -28,6 +29,24 @@ module AnimationGenerator
     else
       raise ArgumentError, "unknow type of key!"
     end
+  end
+  
+  # intersection detector
+  def intersected?(model, from, to)
+    # regularize points in sketchup space
+    from = Geom::Point3d.new(from)
+    to   = Geom::Point3d.new(to)
+    # calculate direction vector
+    dirt = (to - from).normalize
+    # do ray test get intersection point
+    intersect = model.raytest([from,dirt])
+    # if intersection exisit in the direction
+    # - compare it to point "TO"
+    unless intersect.nil?
+      return from.distance(intersect[0]) < from.distance(to)
+    end
+    # if no intersection return false
+    return false     
   end
   
   # generate permutation of hash table

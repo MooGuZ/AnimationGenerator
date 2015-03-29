@@ -80,4 +80,52 @@
 			</animation>
 		</camera>
   </model>
+	
+	<model name="circle-cube">
+		<surface type="circle">
+			<position>[10,0,0]</position>
+			<normal>[-1,0,0]</normal>
+			<radius>15</radius>
+			<texture>PinkUniform</texture>
+		</surface>
+		<surface type="circle">
+			<position>[-10,0,0]</position>
+			<normal>[1,0,0]</normal>
+			<radius>15</radius>
+			<texture>PinkUniform</texture>
+		</surface>
+		<surface type="circle">
+			<position>[0,10,0]</position>
+			<normal>[0,-1,0]</normal>
+			<radius>15</radius>
+			<texture>PinkUniform</texture>
+		</surface>
+		<surface type="circle">
+			<position>[0,-10,0]</position>
+			<normal>[0,1,0]</normal>
+			<radius>15</radius>
+			<texture>PinkUniform</texture>
+		</surface>
+		<surface type="circle">
+			<position>[0,0,10]</position>
+			<normal>[0,0,-1]</normal>
+			<radius>15</radius>
+			<texture>PinkUniform</texture>
+		</surface>
+		<surface type="circle">
+			<position>[0,0,-10]</position>
+			<normal>[0,0,1]</normal>
+			<radius>15</radius>
+			<texture>PinkUniform</texture>
+		</surface>
+		<camera aspratio="1.0" fov="60" imwidth="35">
+			<animation trajectory="line">
+				<eye>0,0,0</eye>
+				<target>10,0,0</target>
+				<up>0,0,1</up>
+				<direction>0,0,1</direction>
+				<velocity>3</velocity>
+			</animation>
+		</camera>
+	</model>
 </config>

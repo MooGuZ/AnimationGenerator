@@ -45,12 +45,14 @@ module AnimationGenerator
       cfunc = method(@type.to_sym)
       
       # calculate closed curve points in canonical space
-      curvPts, range = cfunc.call(@params, thickness, accuracy)
+      curvPts, range, flat = cfunc.call(@params, thickness, accuracy)
       
       # define transformation from canonical space to sketchup space
-      trans = Geom::Transformation.new(
-        pos - norm.transform(Geom::Transformation.scaling(curvPts[0].z)), 
-        norm)
+      trans = flat ?
+              Geom::Transformation.new(pos, norm) : 
+              Geom::Transformation.new(
+                pos - norm.transform(Geom::Transformation.scaling(curvPts[0].z)), 
+                norm)
       # transform curve points to sketchup space
       curvPts = curvPts.map {|p| p.transform(trans)}
       
@@ -62,23 +64,27 @@ module AnimationGenerator
       curv   = ents.add_curve(curvPts)
       # generate face based on the curve
       cface  = ents.add_face(curv)
-      # generate circle as following edges
-      fedges = ents.add_circle(
-        Geom::Point3d.new([0,0,0]).transform(trans),
-        norm,
-        range * 1.1)
-      # use followme to generate curvature shape
-      cface.followme(fedges)
-      # remove following edges from model
-      ents.erase_entities(fedges)
       
-      # find a sample face to determin the face direction
-      sface = ents.find do |e|
-        e.is_a?(Sketchup::Face) && e.vertices.map{|v| v.position}.include?(pos)
-      end
-      # reverse faces if in opposite direction
-      if sface.normal.dot(norm) < 0
-        ents.each {|e| e.reverse! if e.is_a?(Sketchup::Face)}
+      # special process for surfaces (comparing to planes)
+      unless flat
+        # generate circle as following edges
+        fedges = ents.add_circle(
+          Geom::Point3d.new([0,0,0]).transform(trans),
+          norm,
+          range * 1.1)
+        # use followme to generate curvature shape
+        cface.followme(fedges)
+        # remove following edges from model
+        ents.erase_entities(fedges)
+        
+        # find a sample face to determin the face direction
+        sface = ents.find do |e|
+          e.is_a?(Sketchup::Face) && e.vertices.map{|v| v.position}.include?(pos)
+        end
+        # reverse faces if in opposite direction
+        if sface.normal.dot(norm) < 0
+          ents.each {|e| e.reverse! if e.is_a?(Sketchup::Face)}
+        end
       end
       
       # add texture if necessary
@@ -88,10 +94,14 @@ module AnimationGenerator
         # check existance of material with required texture
         raise ArgumentError, "texture #{@texture} not found!" unless mt = mts[@texture]
         # set each face in object with specific material
-        @suobj.entities.each {|e| e.material = mt if e.is_a?(Sketchup::Face)}
+        @suobj.entities.each do |e| 
+          if e.is_a?(Sketchup::Face)
+            e.material = mt
+            e.back_material = mt if flat
+          end
+        end
       end
-    end
-    
+    end 
   end
   # class end: SurfConfig
 end

@@ -1,6 +1,8 @@
 require "sketchup"
 require "fileutils"
 
+require "su_animgen/tools"
+require "su_animgen/settings"
 require "su_animgen/csvtable"
 
 module AnimationGenerator
@@ -40,7 +42,8 @@ module AnimationGenerator
       eye, target, up = method(@anim.trajectory.to_sym).call(
         @anim.eye, @anim.target, @anim.up, @anim.params, @ifrm)
       # check intersection
-      return false if intersected?(view.camera.eye, eye)
+      return false if intersected?(view.model, view.camera.eye, eye) \
+                   unless @ifrm == 0
       # set new position of camera
       view.camera.set(eye, target, up)
       # show current frame
@@ -55,12 +58,7 @@ module AnimationGenerator
       return @ifrm < MAXFRAME 
     end
     
-    # intersection detector
-    def intersected?(from, to)
-      return false
-    end
-    
-    private :nextFrame, :intersected?
+    private :nextFrame
 
   end
   # class end: AnimGen

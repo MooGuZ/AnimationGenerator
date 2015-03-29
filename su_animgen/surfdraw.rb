@@ -7,7 +7,7 @@ module AnimationGenerator
   # Class Start: SurfConfig
   class SurfConfig    
     private
-    # Gaussian Surface
+    # surface : gaussian
     def gaussian(params, thickness, accuracy)
       # get parameters from Hash
       curvature = Float(params["curvature"])
@@ -51,10 +51,10 @@ module AnimationGenerator
       curvPts << curvPts[0]
       
       # return curve points and radius of surface
-      return curvPts, radius
+      return curvPts, radius, false
     end
     
-    # Sphere with arbitraty angle
+    # surface : sphere
     def sphere(params, thickness, accuracy)
       # get parameters from Hash
       curvature = Float(params["curvature"])
@@ -106,7 +106,44 @@ module AnimationGenerator
       curvPts << curvPts[0]
       
       # return curve points
-      return curvPts, range 
+      return curvPts, range, false 
+    end
+    
+    # face : circle
+    def circle(params, unused, accuracy)
+      # get paramter from hash
+      radius = Float(params["radius"])
+      
+      # calculate number of segments
+      nseg = (Math::PI * radius / accuracy).ceil
+      # generate points
+      pts = (0..nseg).map do |i|
+        theta = 2 * Math::PI * i / nseg
+        Geom::Point3d.new([
+          radius * Math.cos(theta), 
+          radius * Math.sin(theta), 
+          0])
+      end
+      
+      return pts, radius, true
+    end
+    
+    # face : rectangle
+    def rectangle(params, *unused)
+      # get paramter from hash
+      width  = Float(params["width"]) / 2
+      height = Float(params["height"]) / 2
+      
+      # generate points
+      pts = [
+        Geom::Point3d.new([ width,  height, 0]),
+        Geom::Point3d.new([-width,  height, 0]),
+        Geom::Point3d.new([-width, -height, 0]),
+        Geom::Point3d.new([ width, -height, 0]),
+        Geom::Point3d.new([ width,  height, 0])
+      ]
+      
+      return pts, [width, height].max, true
     end
     
   end

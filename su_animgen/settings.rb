@@ -2,7 +2,7 @@
 module AnimationGenerator
   # file system information
   # -----------------------
-  PATH = Hash.new unless defined? PATH
+  PATH = Hash.new
   # path of this setting file
   PATH["setting"]  = File.expand_path(__FILE__)
   # path of SketchUp plugin folder
@@ -15,7 +15,7 @@ module AnimationGenerator
   PATH["output"]   = File.expand_path("~/Documents/SketchUp/AnimationGenerator")
   
   # initialize default values hash table
-  DEFAULT = Hash.new unless defined? DEFAULT
+  DEFAULT = Hash.new
   
   # surface related information
   # ---------------------------
@@ -26,13 +26,15 @@ module AnimationGenerator
   # method of drawing : shape or surface
   DRAWMETHOD  = :surface
   # maximum segment number of a drawing element
-  MAX_SEG_NUM = 30 unless defined? MAX_SEG_NUM
-  # list of available surface type
-  SURFTYPE = ['gaussian','sphere']
+  MAX_SEG_NUM = 30
   # parameter list of different type of surface
-  SURFPARAM = Hash.new unless defined? SURFPARAM
-  SURFPARAM["gaussian"] = ["curvature","height","radius"]
-  SURFPARAM["sphere"]   = ["curvature","angle"]
+  SURFPARAM = Hash.new
+  SURFPARAM["gaussian"]  = ["curvature","height","radius"]
+  SURFPARAM["sphere"]    = ["curvature","angle"]
+  SURFPARAM["circle"]    = ["radius"]
+  SURFPARAM["rectangle"] = ["width","height"]
+  # list of available surface type
+  SURFTYPE = SURFPARAM.keys
   
   # camera and animation related information
   # ----------------------------------------
@@ -43,22 +45,22 @@ module AnimationGenerator
   IMQUALITY = 1.0
   MAXFRAME  = 24
   FRAMERATE = 24.0
-  # list of trajectory types
-  TRAJTYPE = ["shift","approach","rotate","line"]
   # parameter list of different trajectory
-  TRAJPARAM = Hash.new unless defined? TRAJPARAM
+  TRAJPARAM = Hash.new
   TRAJPARAM["shift"]    = ["direction","velocity"]
   TRAJPARAM["approach"] = ["velocity"]
   TRAJPARAM["rotate"]   = ["velocity"]
   TRAJPARAM["line"]     = ["direction","velocity"]
+  # list of trajectory types
+  TRAJTYPE = TRAJPARAM.keys
   # initial default values : camera
   DEFAULT["camera"] = Hash.new
   # default value : camera
   DEFAULT["camera"]["aspratio"] = 1.0
-  DEFAULT["camera"]["fov"] = 30.0
-  DEFAULT["camera"]["imwidth"] = 35.0
+  DEFAULT["camera"]["fov"]      = 30.0
+  DEFAULT["camera"]["imwidth"]  = 35.0
   # animation information table parameters
-  ANIMINFO = Hash.new unless defined? ANIMINFO
+  ANIMINFO = Hash.new
   ANIMINFO["filename"] = "anim-info.csv"
   ANIMINFO["header"]   = ["code", "time", "trajectory", "eye", "target", "up", "direction", "velocity"]
   
