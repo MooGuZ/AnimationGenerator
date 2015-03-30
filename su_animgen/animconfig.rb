@@ -28,7 +28,7 @@ module AnimationGenerator
       # load trajectory specific parameters
       @params = Hash.new
       TRAJPARAM[@trajectory].each do |key|
-        @params[key] = elist[key].text.include?(',') ?
+        @params[key] = elist[key].text.array? ?
                        elist[key].text.to_a :
                        elist[key].text.to_f
       end

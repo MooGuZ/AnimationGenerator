@@ -4,7 +4,7 @@ require "forwardable"
 # define array converter
 CSV::Converters[:array] = lambda do |field|
   return field && field.match(/^\[[0-9,]*\]$/) ? 
-         field.gsub(/[\[ \]]/,'').split(',').map {|s| s.to_f} : 
+         field.gsub(/[\[\]]/,'').split(',').map {|s| s.to_f} : 
          field
 end
 

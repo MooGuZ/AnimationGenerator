@@ -1,0 +1,39 @@
+<config name="plane-symmetirc">
+	<model name="gaussian-plane-sym">
+		<texture name="PinkGaussian">pink_gaussian.png</texture>
+		
+		<surface type="gaussian" sym="plane">
+			<position>[7,0,0]</position>
+			<normal>[-1,0,0]</normal>
+			<curvature>0.5</curvature>
+			<height>2</height>
+			<radius>7</radius>
+			<texture>PinkGaussian</texture>
+			<orient>45</orient>
+			<symrange>7</symrange>
+		</surface>
+		
+		<surface type="rectangle">
+			<position>[10,0,0]</position>
+			<normal>[-1,0,0]</normal>
+			<width>20</width>
+			<height>15</height>
+			<orient>0</orient>
+			<texture>PinkGaussian</texture>
+		</surface>
+		
+		<camera>
+			<animation trajectory="line">
+				<eye>[0,0,0]</eye>
+				<target>7,0,0</target>
+				<up>(0,0,1)</up>
+				<direction>[0,1,0],[0,0,1]</direction>
+				<velocity>7,10,13</velocity>
+			</animation>
+		</camera>
+	</model>
+</config>
+	
+	
+	
+	

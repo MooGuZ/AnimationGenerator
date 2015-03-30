@@ -9,24 +9,45 @@ module AnimationGenerator
   # class start: SurfConfig
   class SurfConfig
     # attributions
-    attr :type, :texture, :position,
+    attr :type, :sym, :texture, :position,
          :normal, :params, :suobj
          
     # constructor: from xml branch
     def initialize(node)
       # get surface type
-      @type  = node.attributes["type"].downcase
-      # check availability of type
-      raise ArgumentError, 'Unknown surface type!' unless SURFTYPE.include?(@type)
+      @type = node.attributes["type"].downcase
+      # check availability of surface type
+      unless SURFTYPE.include?(@type)
+        raise ArgumentError, "Unknown surface type : #{@type}!"
+      end
+      # get symmtric setting
+      @sym  = node.attributes["sym"] ?
+              node.attributes["sym"].downcase :
+              DEFAULT["surface"]["sym"]
+      # check availability of symmetric setting
+      unless SYMTYPE.include?(@sym)
+        raise ArgumentError, "Unkonwn symmetric setting : #{@sym}"
+      end
       # get elements list
       elist = node.elements
       # must-have parameters of a surface
       @texture  = elist["texture"].text.downcase
       @position = elist["position"].text.to_a
       @normal   = elist["normal"].text.to_a
-      # other parameters
+      # load other parameters
       @params = Hash.new
-      SURFPARAM[@type].each {|key| @params[key] = elist[key].text.to_f}
+      # parameters for surface
+      SURFPARAM[@type].each do |key|
+        @params[key] = elist[key].text.array? ?
+                       elist[key].text.to_a :
+                       elist[key].text.to_f
+      end
+      # paramters for symmetric
+      SYMPARAM[@sym].each do |key|
+        @params[key] = elist[key].text.array? ?
+                       elist[key].text.to_a :
+                       elist[key].text.to_f
+      end
       # initialize sketchup obj to nil
       @suobj  = nil
     end
@@ -47,12 +68,29 @@ module AnimationGenerator
       # calculate closed curve points in canonical space
       curvPts, range, flat = cfunc.call(@params, thickness, accuracy)
       
-      # define transformation from canonical space to sketchup space
-      trans = flat ?
-              Geom::Transformation.new(pos, norm) : 
-              Geom::Transformation.new(
-                pos - norm.transform(Geom::Transformation.scaling(curvPts[0].z)), 
-                norm)
+      # calculate coordinates in sketchup space
+      zaxis = norm
+      yaxis = @params.keys.include?("orient") ?
+              planeproj(MAIN_ORIENT,norm,AUXL_ORIENT).transform(
+                Geom::Transformation.rotation(
+                  [0,0,0],
+                  norm,
+                  Math::PI * @params["orient"] / 180)).normalize :
+              planeproj(MAIN_ORIENT,norm,AUXL_ORIENT).normalize
+      xaxis = yaxis.cross(zaxis)
+      # calculate origin point in sketchup space
+      orgpt = pos
+      unless flat
+        orgpt -= norm.transform(Geom::Transformation.scaling(curvPts[0].z))
+        if @sym == "plane"
+          orgpt -= yaxis.transform(Geom::Transformation.scaling(@params["symrange"]/2))
+        end
+      end
+      # form transformation transform canonial space to sketchup space
+      trans = Geom::Transformation.new(xaxis, yaxis, zaxis, orgpt)
+      
+      # [TODROP] complete the other half for plane-symmetric beform transformation
+      curvPts = xcomplete(curvPts[0..(curvPts.size-2)]) if !flat && @sym == "plane"
       # transform curve points to sketchup space
       curvPts = curvPts.map {|p| p.transform(trans)}
       
@@ -67,24 +105,38 @@ module AnimationGenerator
       
       # special process for surfaces (comparing to planes)
       unless flat
-        # generate circle as following edges
-        fedges = ents.add_circle(
-          Geom::Point3d.new([0,0,0]).transform(trans),
-          norm,
-          range * 1.1)
+        # generate surface construct following edges
+        case @sym
+        when "axis"
+          # generate circle for axis-symmetric
+          fedges = ents.add_circle(
+            Geom::Point3d.new([0,0,0]).transform(trans),
+            norm,
+            range * 1.1)
+        when "plane"
+          # get other vertex of following edge (one is at pos)
+          other = orgpt + yaxis.transform(Geom::Transformation.scaling(@params["symrange"]))
+          # generate following edge for plane-symetric
+          fedges = ents.add_curve(orgpt, other)
+        else
+          raise ArgumentError, "unknown symmetric type : #{@sym}"
+        end
         # use followme to generate curvature shape
         cface.followme(fedges)
         # remove following edges from model
-        ents.erase_entities(fedges)
+        fedges.each {|e| ents.erase_entities(e) if e.valid?}
         
-        # find a sample face to determin the face direction
-        sface = ents.find do |e|
-          e.is_a?(Sketchup::Face) && e.vertices.map{|v| v.position}.include?(pos)
-        end
-        # reverse faces if in opposite direction
-        if sface.normal.dot(norm) < 0
-          ents.each {|e| e.reverse! if e.is_a?(Sketchup::Face)}
-        end
+        # [ABD] for hardness, just add texture to front-back both side
+        # # find a sample face to determin the face direction
+        # sface = ents.find do |e|
+        #   e.is_a?(Sketchup::Face) && 
+        #   e.vertices.map{|v| v.position}.include?(pos) &&
+        #   !e.normal.perpendicular?(norm)
+        # end
+        # # reverse faces if in opposite direction
+        # if sface.normal.dot(norm) < 0
+        #   ents.each {|e| e.reverse! if e.is_a?(Sketchup::Face)}
+        # end
       end
       
       # add texture if necessary
@@ -97,7 +149,7 @@ module AnimationGenerator
         @suobj.entities.each do |e| 
           if e.is_a?(Sketchup::Face)
             e.material = mt
-            e.back_material = mt if flat
+            e.back_material = mt
           end
         end
       end

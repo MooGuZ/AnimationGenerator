@@ -7,12 +7,24 @@ require "digest"
 require "sketchup"
 
 module AnimationGenerator 
-  # convert string to array
+  
   class ::String
+    # convert string to array
     def to_a
-      return self.gsub(/[\[\(\< \>\)\]]/,'')
-                 .split(',')
-                 .map {|s| s.to_f}
+      if self.include?("],[") 
+        # this is an array of arrays
+        return self.scan(/\[[0-9, ]*\]/)
+                   .map(&:to_a)
+      else
+        return self.gsub(/[\[\]]/,'')
+                   .split(',')
+                   .map {|s| s.to_f}
+      end
+    end
+    
+    # array?: decide a string represent an array or not
+    def array?
+      return self.include?(',')
     end
   end
   
@@ -27,7 +39,7 @@ module AnimationGenerator
     when "velocity"
       return value.is_a?(Array)
     else
-      raise ArgumentError, "unknow type of key!"
+      raise ArgumentError, "unknow key : #{key}!"
     end
   end
   
@@ -47,6 +59,38 @@ module AnimationGenerator
     end
     # if no intersection return false
     return false     
+  end
+  
+  # vector's project on a plane
+  def planeproj(vec, norm, assist)
+    # ensure paramters are Geom::Vector3d 
+    vec    = Geom::Vector3d.new(vec)
+    norm   = Geom::Vector3d.new(norm)
+    assist = Geom::Vector3d.new(assist)
+    
+    # parameter's valid check
+    if vec.parallel?(assist)
+      raise ArgumentError, 
+            'assistant vector should not parallel to vector'
+    end
+    
+    # if vector parallel to normal of face
+    vec = assist if vec.parallel?(norm)
+    
+    # normalize norm
+    norm.normalize!
+    # get the projection
+    return vec - norm.transform(Geom::Transformation.scaling(vec % norm))
+  end
+  
+  # xcomplete: create x-axis mirror of points to complete points set
+  def xcomplete(points)
+    # define mirror transformation
+    trans  = Geom::Transformation.rotation([0,0,0],[0,0,1],Math::PI)
+    # make mirror points
+    mirror = points.map{|pt| pt.transform(trans)}.reverse
+    # combine original and mirror points
+    return mirror[0..(mirror.size-2)] + points
   end
   
   # generate permutation of hash table

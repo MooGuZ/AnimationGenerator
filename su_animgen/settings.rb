@@ -27,17 +27,40 @@ module AnimationGenerator
   DRAWMETHOD  = :surface
   # maximum segment number of a drawing element
   MAX_SEG_NUM = 30
+  # base-orientations
+  MAIN_ORIENT = [0,0,1]
+  AUXL_ORIENT = [1,0,0]
+  # ...........................................
   # parameter list of different type of surface
   SURFPARAM = Hash.new
   SURFPARAM["gaussian"]  = ["curvature","height","radius"]
   SURFPARAM["sphere"]    = ["curvature","angle"]
   SURFPARAM["circle"]    = ["radius"]
-  SURFPARAM["rectangle"] = ["width","height"]
+  SURFPARAM["rectangle"] = ["width","height","orient"]
   # list of available surface type
   SURFTYPE = SURFPARAM.keys
+  # ............................................
+  # parameter list of different symmetric policy
+  SYMPARAM = Hash.new
+  SYMPARAM["axis"]  = []
+  SYMPARAM["plane"] = ["orient", "symrange"]
+  # list of available symmetric type
+  SYMTYPE = SYMPARAM.keys
+  # ........................
+  # default values : surface
+  DEFAULT["surface"] = Hash.new
+  DEFAULT["surface"]["sym"] = "axis"
   
-  # camera and animation related information
-  # ----------------------------------------
+  # camera related settings
+  # -----------------------
+  # default value : camera
+  DEFAULT["camera"] = Hash.new
+  DEFAULT["camera"]["aspratio"] = 1.0
+  DEFAULT["camera"]["fov"]      = 30.0
+  DEFAULT["camera"]["imwidth"]  = 35.0
+  
+  # animation related information
+  # -----------------------------
   # animation settings
   IMRESX    = 128
   IMRESY    = 128
@@ -45,6 +68,7 @@ module AnimationGenerator
   IMQUALITY = 1.0
   MAXFRAME  = 24
   FRAMERATE = 24.0
+  # ......................................
   # parameter list of different trajectory
   TRAJPARAM = Hash.new
   TRAJPARAM["shift"]    = ["direction","velocity"]
@@ -53,16 +77,13 @@ module AnimationGenerator
   TRAJPARAM["line"]     = ["direction","velocity"]
   # list of trajectory types
   TRAJTYPE = TRAJPARAM.keys
-  # initial default values : camera
-  DEFAULT["camera"] = Hash.new
-  # default value : camera
-  DEFAULT["camera"]["aspratio"] = 1.0
-  DEFAULT["camera"]["fov"]      = 30.0
-  DEFAULT["camera"]["imwidth"]  = 35.0
+  # ......................................
   # animation information table parameters
   ANIMINFO = Hash.new
   ANIMINFO["filename"] = "anim-info.csv"
-  ANIMINFO["header"]   = ["code", "time", "trajectory", "eye", "target", "up", "direction", "velocity"]
+  ANIMINFO["header"]   = [
+    "code", "time", "trajectory", "eye", 
+    "target", "up", "direction", "velocity"]
   
   # other settings
   # --------------
