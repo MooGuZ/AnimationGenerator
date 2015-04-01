@@ -42,12 +42,11 @@ module AnimationGenerator
       eye, target, up = method(@anim.trajectory.to_sym).call(
         @anim.eye, @anim.target, @anim.up, @anim.params, @ifrm)
       # check intersection
-      return false if intersected?(view.model, view.camera.eye, eye) \
-                   unless @ifrm == 0
+      return false if intersected?(view.model, view.camera.eye, eye) && @ifrm != 0
       # set new position of camera
       view.camera.set(eye, target, up)
       # show current frame
-      view.show_frame
+      # view.show_frame
       # write image
       view.write_image(
         File.join(@anim.path, "%03d.jpg" % @ifrm),

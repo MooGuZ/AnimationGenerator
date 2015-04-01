@@ -12,12 +12,14 @@
       <texture>PinkGaussian</texture>
     </surface>
     
-    <surface type="Gaussian">
+    <surface type="Gaussian" sym="plane">
       <position>5,5,5</position>
       <normal>-1,-1,-1</normal> 
       <curvature>-5</curvature>
       <height>3</height>
       <radius>3</radius>
+			<orient>0</orient>
+			<symrange>5</symrange>
       <texture>PinkUniform</texture>
     </surface>
     
@@ -74,7 +76,7 @@
 				<target>-6,6,0</target>
 				<up>0,0,1</up>
 				<direction>1,0,0</direction>
-				<velocity>0.5</velocity>
+				<velocity>0.5,5</velocity>
       </animation>
     </camera>
   </model>
