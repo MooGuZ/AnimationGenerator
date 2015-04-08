@@ -30,6 +30,8 @@ module AnimationGenerator
   # base-orientations
   MAIN_ORIENT = [0,0,1]
   AUXL_ORIENT = [1,0,0]
+  # texture size
+  TEXTURE_SIZE = {'x' => 7, 'y' => 7}
   # ...........................................
   # parameter list of different type of surface
   SURFPARAM = Hash.new

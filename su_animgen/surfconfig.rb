@@ -49,7 +49,7 @@ module AnimationGenerator
                        elist[key].text.to_f
       end
       # initialize sketchup obj to nil
-      @suobj  = nil
+      @suobj = nil
     end
     
     # surface drawing
@@ -139,6 +139,14 @@ module AnimationGenerator
         # end
       end
       
+      # soft and smooth edges in the group
+      ents.each do |e|
+        if e.is_a?(Sketchup::Edge)
+          e.soft   = true unless e.soft?
+          e.smooth = true unless e.smooth?
+        end
+      end
+      
       # add texture if necessary
       unless @texture == "none"
         # get material handle of SketchUp
@@ -148,8 +156,14 @@ module AnimationGenerator
         # set each face in object with specific material
         @suobj.entities.each do |e| 
           if e.is_a?(Sketchup::Face)
-            e.material = mt
-            e.back_material = mt
+            # # set material on face
+            # e.material = mt
+            # e.back_material = mt
+            # calculate uvpoints of this face
+            uvpoint = uvmap(e, @sym, pos, norm, yaxis, range)
+            # assign texture position of this face
+            e.position_material(mt, uvpoint, true)
+            e.position_material(mt, uvpoint, false)
           end
         end
       end

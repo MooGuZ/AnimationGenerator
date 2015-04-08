@@ -18,6 +18,8 @@ require "su_animgen/settings"
 require "su_animgen/surfconfig"
 # load surface drawing methods
 require "su_animgen/surfdraw"
+# load uvmap calculating methods
+require "su_animgen/uvmap"
 # load ModelConfig class definition
 require "su_animgen/modelconfig"
 # load CamConfig class definition

@@ -62,31 +62,18 @@ module AnimationGenerator
   end
   
   # vector's project on a plane
-  def planeproj(vec, norm, *others)
+  def planeproj(vec, norm, assist = [0,0,0])
     # ensure paramters are Geom::Vector3d 
     vec    = Geom::Vector3d.new(vec)
-    norm   = Geom::Vector3d.new(norm)
+    norm   = Geom::Vector3d.new(norm).normalize
+    assist = Geom::Vector3d.new(assist)
     
-    # get assistant vector
-    if others.size
-      assist = Geom::Vector3d.new(others[0])
-    else
-      assist = vec.parallel?([1,0,0]) ?
-               Geom::Vector3d.new([1,0,0]) :
-               Geom::Vector3d.new([0,1,0])
-    end
-    
-    # parameter's valid check
-    if vec.parallel?(assist)
-      raise ArgumentError, 
-            'assistant vector should not parallel to vector'
-    end
+    # deal with zero vector
+    return vec if vec.length == 0
     
     # if vector parallel to normal of face
     vec = assist if vec.parallel?(norm)
     
-    # normalize norm
-    norm.normalize!
     # get the projection
     return vec - norm.transform(Geom::Transformation.scaling(vec % norm))
   end

@@ -2,6 +2,8 @@
   <model name="Gaussian-Surfaces">    
     <texture name="PinkGaussian">pink_gaussian.png</texture>
     <texture name="PinkUniform">pink_uniform.png</texture>
+		<texture name="HighCow">cow_highcorr.jpg</texture>
+		<texture name="LowCow">cow_lowcorr.jpg</texture>
     
     <surface type="Gaussian">
       <position>-2,-2,-2</position>
@@ -9,7 +11,7 @@
       <curvature>5</curvature>
       <height>3</height>
       <radius>3</radius>
-      <texture>PinkGaussian</texture>
+      <texture>LowCow</texture>
     </surface>
     
     <surface type="Gaussian" sym="plane">
@@ -20,7 +22,7 @@
       <radius>3</radius>
 			<orient>0</orient>
 			<symrange>5</symrange>
-      <texture>PinkUniform</texture>
+      <texture>LowCow</texture>
     </surface>
     
     <camera aspratio="1.0" fov="30" imwidth="35.0">
