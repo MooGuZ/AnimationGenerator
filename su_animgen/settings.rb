@@ -1,4 +1,8 @@
 # this file contains all the settings utilized in AnimationGenerator
+#
+# MooGu Z. <hzhu@case.edu>
+# Apr 11, 2015
+
 module AnimationGenerator
   # file system information
   # -----------------------
@@ -21,10 +25,6 @@ module AnimationGenerator
   # ---------------------------
   # accuracy of curve in drawing
   ACCURACY    = 0.1
-  # thickness of drawing surface
-  THICKNESS   = 0.01
-  # method of drawing : shape or surface
-  DRAWMETHOD  = :surface
   # maximum segment number of a drawing element
   MAX_SEG_NUM = 30
   # base-orientations
@@ -32,8 +32,6 @@ module AnimationGenerator
   AUXL_ORIENT = [1,0,0]
   # texture size
   TEXTURE_SIZE = {'x' => 7, 'y' => 7}
-  # use follow me to build the surface
-  USEFOLLOWME = false
   # the threshold when decise to be zero
   ZEROTOLERANCE = 1e-10
   # ...........................................

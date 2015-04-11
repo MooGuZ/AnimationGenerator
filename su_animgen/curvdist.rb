@@ -1,4 +1,10 @@
-require "sketchup"
+# This file calculate distance between two points on a specific type of surface.
+# It provide a interface as DIST = CURVDIST(), and this method would automatically
+# choose the concrete calculating method according to the surface type of current
+# surface configuration.
+#
+# MooGu Z. <hzhu@case.edu>
+# Apr 11, 2015
 
 require "su_animgen/settings"
 
@@ -24,8 +30,6 @@ module AnimationGenerator
     def distsphere(x, z)
       # get radius of sphere
       radius = 1 / Float(@params["curvature"]).abs
-      # [!!!] calibrate radius if necessary
-      radius = radius + THICKNESS if @params["curvature"] < 0
       # calculate length of vector
       l = Math.sqrt(x**2 + z**2)
       # deal abnormal case

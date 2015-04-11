@@ -1,3 +1,14 @@
+# This file provide a interface to mapping 3D points in sketchup space to 
+# 2D point in texture image (the coordinate of texture are standarized to
+# [0,0] to [1,1]). This interface only need the face handle in sketchup
+# and return an array of points can directly used by sketchup function
+# 'position_material' of Sketchup::Face objects. The interface would choose
+# concrete calculation process automatically according to the current surface
+# configuration.
+# 
+# MooGu Z. <hzhu@case.edu>
+# Apr 11, 2015
+
 require "sketchup"
 
 require "su_animgen/settings"

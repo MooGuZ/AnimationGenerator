@@ -1,4 +1,5 @@
-# this file contains all tools that designed for AnimationGenerator
+# this file contains all tools that designed to help other components
+# of AnimationGenerator to finish their job.
 #
 # MooGu Z. <hzhu@case.edu>
 # Mar 27, 2015

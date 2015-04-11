@@ -1,3 +1,9 @@
+# this file defines a class to generate animations according to
+# animation configuration.
+#
+# MooGu Z. <hzhu@case.edu>
+# Apr 11, 2015
+
 require "sketchup"
 require "fileutils"
 
@@ -39,8 +45,9 @@ module AnimationGenerator
     # nextFrame: generate next frame of animation
     def nextFrame(view)
       # calculate camera position of current frame
-      eye, target, up = method(@anim.trajectory.to_sym).call(
-        @anim.eye, @anim.target, @anim.up, @anim.params, @ifrm)
+      # eye, target, up = method(@anim.trajectory.to_sym).call(
+      #   @anim.eye, @anim.target, @anim.up, @anim.params, @ifrm)
+      eye, target, up = trajcalc(@anim, @ifrm)
       # check intersection
       return false if intersected?(view.model, view.camera.eye, eye) && @ifrm != 0
       # set new position of camera

@@ -1,3 +1,11 @@
+# This file define a class of model configuration, which essentially contains
+# a list of surfaces, and a camera setting. Besides, it also load texture from
+# image files, and provide class method to read and write model information in 
+# XML file.
+#
+# MooGu Z. <hzhu@case.edu>
+# Apr 11, 2015
+
 require "sketchup"
 require 'fileutils'
 require "rexml/document"

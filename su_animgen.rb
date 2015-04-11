@@ -3,9 +3,6 @@
 # MooGu Z. <hzhu@case.edu>
 # Version 0.0.1 - March 14, 2015
 
-# # load basic test function gaussSurfGen
-# require "su_animgen/gaussSurfGen"
-
 # load sketchup library
 require "sketchup"
 # load tools
@@ -16,8 +13,8 @@ require "su_animgen/csvtable"
 require "su_animgen/settings"
 # load SurfConfig class definition
 require "su_animgen/surfconfig"
-# load surface drawing methods
-require "su_animgen/surfdraw"
+# load curves drawing methods
+require "su_animgen/curvdraw"
 # load converting method from curve to surface
 require "su_animgen/curv2surf"
 # load uvmap calculating methods

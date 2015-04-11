@@ -1,3 +1,10 @@
+# This file define a class of animation configuration, which essentially contains
+# target position, camera position and moving information, and information of how
+# to store animation in file system.
+#
+# MooGu Z. <hzhu@case.edu>
+# Apr 11, 2015
+
 require "sketchup"
 require "rexml/document"
 

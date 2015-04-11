@@ -1,3 +1,14 @@
+# This file provide a method to convert curve to a surface according to the specific
+# symmetric type. This method aims at replace 'followme' in sketchup, which require
+# a face to start surface construction process, and in this way, the result always
+# is actually a shape not surface. Further more, this restriction cause a lot of
+# trouble in implementing several functions. The verion I implemented here can only
+# work in side the surface configuration class because it directly uses a lot class
+# variables.
+#
+# MooGu Z. <hzhu@case.edu>
+# Apr 11, 2015
+
 require "sketchup"
 
 require "su_animgen/settings"

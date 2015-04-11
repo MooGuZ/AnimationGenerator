@@ -1,9 +1,13 @@
+# This file define a class of camera configuration, which essentially contains
+# camera settings in sketchup and a list of animation configuration.
+#
+# MooGu Z. <hzhu@case.edu>
+# Apr 11, 2015
+
 require "sketchup"
-require 'fileutils'
 require "rexml/document"
 
 require "su_animgen/csvtable"
-
 require "su_animgen/settings"
 require "su_animgen/animconfig"
 

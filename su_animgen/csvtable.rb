@@ -1,3 +1,8 @@
+# This file provide a class CSVTable to read and write CSV files
+#
+# MooGu Z. <hzhu@case.edu>
+# Apr 11, 2015
+
 require "csv"
 require "forwardable"
 

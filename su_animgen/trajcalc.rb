@@ -1,9 +1,24 @@
+# This file provide an interface to class AnimGen to calculate camera position
+# of a specific animation configuration at a specific frame.
+# 
+# MooGu Z. <hzhu@case.edu>
+# Apr 11, 2015 
+
 require "sketchup"
+
+require "su_animgen/settings"
+require "su_animgen/animconfig"
 
 module AnimationGenerator
   # class start: AnimGen
   class AnimGen
     private
+    
+    # trajcalc : interface
+    def trajcalc(aconf, ifrm)
+      method(aconf.trajectory.to_sym).call(
+        aconf.eye, aconf.target, aconf.up, aconf.params, ifrm)
+    end
     
     # trajectory : line
     def line(eye, target, up, params, ind)
