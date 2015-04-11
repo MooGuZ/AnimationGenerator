@@ -1,13 +1,13 @@
-require "matrix"
 require "sketchup"
 
 require "su_animgen/settings"
+require "su_animgen/curvdist"
 
 module AnimationGenerator
   # class start: SurfConfig
   class SurfConfig
     # uvmap interface method
-    def uvmap(face, symtype, origin, norm, orient, range)
+    def uvmap(face, symtype, origin, norm, orient)
       # initialize uvpoint array
       uvpoint = Array.new()
       # calculate uvposition of each vertices on face
@@ -18,27 +18,28 @@ module AnimationGenerator
         uvpoint << v.position
         # call specific method according to symmetric type
         uvpoint << method(("uv"+symtype).to_sym).call(
-                     v.position, origin, norm, orient, range)
+                     v.position, origin, norm, orient)
       end
       # return uvpoint array
       return uvpoint    
     end
     
     # uvmap for axis-symmetric
-    def uvaxis(point, origin, norm, orient, range)
+    def uvaxis(point, origin, norm, orient)
       # regularize input arguments
       point  = Geom::Point3d.new(point)
       origin = Geom::Point3d.new(origin)
       norm   = Geom::Vector3d.new(norm).normalize
       orient = Geom::Vector3d.new(orient).normalize
-      range  = Float(range)
       
       # vector of position
       op = point - origin
-      # estimate radius by euclidien distance
-      r = op.length / [2 * range, TEXTURE_SIZE.values.min].max
       # normalized projection of position vector to top plane
       q = planeproj(op, norm)
+      
+      # calculate curve distance
+      d =  curvdist(q.length, op.dot(norm))
+      
       # calculate sin and cos
       if q.length == 0
         cos = 0.0
@@ -50,31 +51,37 @@ module AnimationGenerator
       end
       
       # return uvpoint
-      return Geom::Point3d.new([0.5 + r * cos, 0.5 + r * sin, 1])
+      return Geom::Point3d.new([
+        d * cos / TEXTURE_SIZE['x'], 
+        d * sin / TEXTURE_SIZE['y'],
+        1])
     end
     
     # uvmap for plane-symmetric
-    def uvplane(point, origin, norm, orient, range)
+    def uvplane(point, origin, norm, orient)
       # regularize input arguments
       point  = Geom::Point3d.new(point)
       origin = Geom::Point3d.new(origin)
       norm   = Geom::Vector3d.new(norm).normalize
       orient = Geom::Vector3d.new(orient).normalize
-      range  = Float(range)
-      
-      # get range of x and y
-      rangex = [2 * range, TEXTURE_SIZE['x']].max
-      rangey = [2 * @params["symrange"], TEXTURE_SIZE['y']].max
       
       # vector op : from origin to point
       op = point - origin
       # projection of vector op to x-z plane
       q = planeproj(op, orient)
+      # projection to x axis
+      x = q.dot(orient.cross(norm))
       # get sign of q to xaxis
-      sign = q.dot(orient.cross(norm)) >= 0 ? 1.0 : -1.0
+      sign = x >= 0 ? 1.0 : -1.0
+      
+      # calculate curf distance
+      d = curvdist(x.abs, q.dot(norm))
       
       # calculate coordinate of uvpoint
-      return Geom::Point3d.new([sign * q.length / rangex, op.dot(orient) / rangey, 1])
+      return Geom::Point3d.new([
+        sign * d / TEXTURE_SIZE['x'], 
+        op.dot(orient) / TEXTURE_SIZE['y'], 
+        1])
     end
   end
   # class end: SurfConfig

@@ -4,6 +4,7 @@ require "rexml/document"
 require "su_animgen/tools"
 require "su_animgen/settings"
 require "su_animgen/surfdraw"
+require "su_animgen/uvmap"
 
 module AnimationGenerator
   # class start: SurfConfig
@@ -125,18 +126,6 @@ module AnimationGenerator
         cface.followme(fedges)
         # remove following edges from model
         fedges.each {|e| ents.erase_entities(e) if e.valid?}
-        
-        # [ABD] for hardness, just add texture to front-back both side
-        # # find a sample face to determin the face direction
-        # sface = ents.find do |e|
-        #   e.is_a?(Sketchup::Face) && 
-        #   e.vertices.map{|v| v.position}.include?(pos) &&
-        #   !e.normal.perpendicular?(norm)
-        # end
-        # # reverse faces if in opposite direction
-        # if sface.normal.dot(norm) < 0
-        #   ents.each {|e| e.reverse! if e.is_a?(Sketchup::Face)}
-        # end
       end
       
       # soft and smooth edges in the group
@@ -156,11 +145,8 @@ module AnimationGenerator
         # set each face in object with specific material
         @suobj.entities.each do |e| 
           if e.is_a?(Sketchup::Face)
-            # # set material on face
-            # e.material = mt
-            # e.back_material = mt
             # calculate uvpoints of this face
-            uvpoint = uvmap(e, @sym, pos, norm, yaxis, range)
+            uvpoint = uvmap(e, @sym, pos, norm, yaxis)
             # assign texture position of this face
             e.position_material(mt, uvpoint, true)
             e.position_material(mt, uvpoint, false)

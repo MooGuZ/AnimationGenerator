@@ -1,6 +1,7 @@
 <config name="plane-symmetirc">
 	<model name="gaussian-plane-sym">
 		<texture name="PinkGaussian">pink_gaussian.png</texture>
+		<texture name="HighCow">cow_highcorr.jpg</texture>
 		
 		<surface type="gaussian" sym="plane">
 			<position>[7,0,0]</position>
@@ -19,8 +20,15 @@
 			<width>20</width>
 			<height>15</height>
 			<orient>0</orient>
-			<texture>PinkGaussian</texture>
+			<texture>HighCow</texture>
 		</surface>
+		
+    <surface type="circle">
+      <position>[-10,0,0]</position>
+      <normal>[1,0,0]</normal>
+      <radius>15</radius>
+      <texture>HighCow</texture>
+    </surface>
 		
 		<camera>
 			<animation trajectory="line">

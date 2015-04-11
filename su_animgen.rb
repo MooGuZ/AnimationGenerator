@@ -20,6 +20,8 @@ require "su_animgen/surfconfig"
 require "su_animgen/surfdraw"
 # load uvmap calculating methods
 require "su_animgen/uvmap"
+# load curve length calculating methods
+require "su_animgen/curvdist"
 # load ModelConfig class definition
 require "su_animgen/modelconfig"
 # load CamConfig class definition

@@ -45,7 +45,7 @@
       <normal>-1,1,0</normal>
       <curvature>0.4</curvature>
       <angle>180</angle>
-      <texture>PinkUniform</texture>
+      <texture>LowCow</texture>
     </surface>
     
     <surface type="Sphere">
@@ -53,7 +53,7 @@
       <normal>1,-1,0</normal>
       <curvature>-0.4</curvature>
       <angle>270</angle>
-      <texture>PinkGaussian</texture>
+      <texture>HighCow</texture>
     </surface>
     
     <surface type="Sphere">

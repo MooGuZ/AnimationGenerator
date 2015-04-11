@@ -33,6 +33,7 @@ module AnimationGenerator
                             : height * (1 - Math.exp((x**2 * curvature) / (2 * height)))
         Geom::Point3d.new([x, 0, z])
       end
+      
       # make closed curve with assistant points
       case DRAWMETHOD
       when :surface
@@ -80,6 +81,7 @@ module AnimationGenerator
       end
       # calculate the range of surface
       range = (angle <= Math::PI / 2) ? curvPts.last.x : radius
+      
       # make closed curve with assistant points
       case DRAWMETHOD
       when :surface
