@@ -5,6 +5,8 @@ require "su_animgen/settings"
 module AnimationGenerator
   # class start: SurfConfig
   class SurfConfig
+    private
+    
     # curvdist : interface to calculate distance on current curve
     def curvdist(x, z)
       return method(("dist"+@type).to_sym).call(x, z)

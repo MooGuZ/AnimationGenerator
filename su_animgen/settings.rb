@@ -32,6 +32,10 @@ module AnimationGenerator
   AUXL_ORIENT = [1,0,0]
   # texture size
   TEXTURE_SIZE = {'x' => 7, 'y' => 7}
+  # use follow me to build the surface
+  USEFOLLOWME = false
+  # the threshold when decise to be zero
+  ZEROTOLERANCE = 1e-10
   # ...........................................
   # parameter list of different type of surface
   SURFPARAM = Hash.new

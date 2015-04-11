@@ -6,6 +6,8 @@ require "su_animgen/curvdist"
 module AnimationGenerator
   # class start: SurfConfig
   class SurfConfig
+    private
+    
     # uvmap interface method
     def uvmap(face)
       # initialize uvpoint array

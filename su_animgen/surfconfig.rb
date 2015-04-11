@@ -4,6 +4,7 @@ require "rexml/document"
 require "su_animgen/tools"
 require "su_animgen/settings"
 require "su_animgen/surfdraw"
+require "su_animgen/curv2surf"
 require "su_animgen/uvmap"
 
 module AnimationGenerator
@@ -78,7 +79,7 @@ module AnimationGenerator
       orgpt = pos
       unless flat
         orgpt -= norm.transform(Geom::Transformation.scaling(curvPts[0].z))
-        if @sym == "plane"
+        if @sym == "plane" && USEFOLLOWME
           orgpt -= yaxis.transform(Geom::Transformation.scaling(@params["symrange"]/2))
         end
       end
@@ -89,45 +90,59 @@ module AnimationGenerator
       @orient = yaxis
       
       # [TODROP] complete the other half for plane-symmetric beform transformation
-      curvPts = xcomplete(curvPts[0..(curvPts.size-2)]) if !flat && @sym == "plane"
+      if !flat && @sym == "plane"
+        curvPts = USEFOLLOWME ? xcomplete(curvPts[0..(curvPts.size-2)])
+                              : xcomplete(curvPts)
+      end
       # transform curve points to sketchup space
       curvPts = curvPts.map {|p| p.transform(trans)}
       
       # create a group for this surface
       @suobj = Sketchup.active_model.entities.add_group
-      # get entities handle of sketchup
-      ents   = @suobj.entities
-      # generate closed curve in sketchup space
-      curv   = ents.add_curve(curvPts)
-      # generate face based on the curve
-      cface  = ents.add_face(curv)
       
-      # special process for surfaces (comparing to planes)
-      unless flat
-        # generate surface construct following edges
-        case @sym
-        when "axis"
-          # generate circle for axis-symmetric
-          fedges = ents.add_circle(
-            Geom::Point3d.new([0,0,0]).transform(trans),
-            norm,
-            range * 1.1)
-        when "plane"
-          # get other vertex of following edge (one is at pos)
-          other = orgpt + yaxis.transform(Geom::Transformation.scaling(@params["symrange"]))
-          # generate following edge for plane-symetric
-          fedges = ents.add_curve(orgpt, other)
-        else
-          raise ArgumentError, "unknown symmetric type : #{@sym}"
+      if USEFOLLOWME
+        # get entities handle of sketchup
+        ents   = @suobj.entities
+        # generate closed curve in sketchup space
+        curv   = ents.add_curve(curvPts)
+        # generate face based on the curve
+        cface  = ents.add_face(curv)
+        
+        # special process for surfaces (comparing to planes)
+        unless flat
+          # generate surface construct following edges
+          case @sym
+          when "axis"
+            # generate circle for axis-symmetric
+            fedges = ents.add_circle(
+              Geom::Point3d.new([0,0,0]).transform(trans),
+              norm,
+              range * 1.1)
+          when "plane"
+            # get other vertex of following edge (one is at pos)
+            other = orgpt + yaxis.transform(Geom::Transformation.scaling(@params["symrange"]))
+            # generate following edge for plane-symetric
+            fedges = ents.add_curve(orgpt, other)
+          else
+            raise ArgumentError, "unknown symmetric type : #{@sym}"
+          end
+          # use followme to generate curvature shape
+          cface.followme(fedges)
+          # remove following edges from model
+          fedges.each {|e| ents.erase_entities(e) if e.valid?}
         end
-        # use followme to generate curvature shape
-        cface.followme(fedges)
-        # remove following edges from model
-        fedges.each {|e| ents.erase_entities(e) if e.valid?}
-      end
+      else
+        if flat
+          # draw the face directly
+          @suobj.entities.add_face(@suobj.entities.add_curve(curvPts))
+        else
+          # generate surface from curve and symmetric rule
+          curv2surf(curvPts)
+        end
+      end      
       
       # soft and smooth edges in the group
-      ents.each do |e|
+      @suobj.entities.each do |e|
         if e.is_a?(Sketchup::Edge)
           e.soft   = true unless e.soft?
           e.smooth = true unless e.smooth?

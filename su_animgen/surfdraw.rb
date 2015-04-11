@@ -7,6 +7,7 @@ module AnimationGenerator
   # Class Start: SurfConfig
   class SurfConfig    
     private
+    
     # surfdraw : interface
     def surfdraw()
       method(@type.to_sym).call()
@@ -15,9 +16,9 @@ module AnimationGenerator
     # surface : gaussian
     def gaussian()
       # get parameters from Hash
-      curvature = Float(@params["curvature"])
-      height    = Float(@params["height"])
-      radius    = Float(@params["radius"])
+      curvature = @params["curvature"]
+      height    = @params["height"]
+      radius    = @params["radius"]
       
       # check availability of input arguments : HEIGHT
       raise ArgumentError, "CURVATURE cannot be 0 for Gaussian surface" if curvature == 0
@@ -38,6 +39,9 @@ module AnimationGenerator
                             : height * (1 - Math.exp((x**2 * curvature) / (2 * height)))
         Geom::Point3d.new([x, 0, z])
       end
+         
+      # backward compatibility
+      return curvPts, radius, false unless USEFOLLOWME
       
       # make closed curve with assistant points
       case DRAWMETHOD
@@ -86,6 +90,9 @@ module AnimationGenerator
       end
       # calculate the range of surface
       range = (angle <= Math::PI / 2) ? curvPts.last.x : radius
+      
+      # backward compatibility
+      return curvPts, range, false unless USEFOLLOWME
       
       # make closed curve with assistant points
       case DRAWMETHOD
@@ -150,7 +157,7 @@ module AnimationGenerator
         Geom::Point3d.new([ width,  height, 0])
       ]
       
-      return pts, [width, height].max, true
+      return pts, Math.sqrt(width**2, height**2), true
     end
     
   end

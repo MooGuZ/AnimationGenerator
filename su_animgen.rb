@@ -18,6 +18,8 @@ require "su_animgen/settings"
 require "su_animgen/surfconfig"
 # load surface drawing methods
 require "su_animgen/surfdraw"
+# load converting method from curve to surface
+require "su_animgen/curv2surf"
 # load uvmap calculating methods
 require "su_animgen/uvmap"
 # load curve length calculating methods
