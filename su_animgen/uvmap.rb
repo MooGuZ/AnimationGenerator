@@ -7,7 +7,7 @@ module AnimationGenerator
   # class start: SurfConfig
   class SurfConfig
     # uvmap interface method
-    def uvmap(face, symtype, origin, norm, orient)
+    def uvmap(face)
       # initialize uvpoint array
       uvpoint = Array.new()
       # calculate uvposition of each vertices on face
@@ -17,28 +17,24 @@ module AnimationGenerator
         # add position of current vertex to uvpoint array
         uvpoint << v.position
         # call specific method according to symmetric type
-        uvpoint << method(("uv"+symtype).to_sym).call(
-                     v.position, origin, norm, orient)
+        uvpoint << method(("uv"+@sym).to_sym).call(v.position)
       end
       # return uvpoint array
       return uvpoint    
     end
     
     # uvmap for axis-symmetric
-    def uvaxis(point, origin, norm, orient)
+    def uvaxis(point)
       # regularize input arguments
       point  = Geom::Point3d.new(point)
-      origin = Geom::Point3d.new(origin)
-      norm   = Geom::Vector3d.new(norm).normalize
-      orient = Geom::Vector3d.new(orient).normalize
       
       # vector of position
-      op = point - origin
+      op = point - @position
       # normalized projection of position vector to top plane
-      q = planeproj(op, norm)
+      q = planeproj(op, @normal)
       
       # calculate curve distance
-      d =  curvdist(q.length, op.dot(norm))
+      d =  curvdist(q.length, op.dot(@normal))
       
       # calculate sin and cos
       if q.length == 0
@@ -46,8 +42,8 @@ module AnimationGenerator
         sin = 0.0
       else
         q.normalize!
-        cos = q.dot(orient.cross(norm))
-        sin = q.dot(orient)
+        cos = q.dot(@orient.cross(@normal))
+        sin = q.dot(@orient)
       end
       
       # return uvpoint
@@ -58,29 +54,26 @@ module AnimationGenerator
     end
     
     # uvmap for plane-symmetric
-    def uvplane(point, origin, norm, orient)
+    def uvplane(point)
       # regularize input arguments
       point  = Geom::Point3d.new(point)
-      origin = Geom::Point3d.new(origin)
-      norm   = Geom::Vector3d.new(norm).normalize
-      orient = Geom::Vector3d.new(orient).normalize
       
       # vector op : from origin to point
-      op = point - origin
+      op = point - @position
       # projection of vector op to x-z plane
-      q = planeproj(op, orient)
+      q = planeproj(op, @orient)
       # projection to x axis
-      x = q.dot(orient.cross(norm))
+      x = q.dot(@orient.cross(@normal))
       # get sign of q to xaxis
       sign = x >= 0 ? 1.0 : -1.0
       
       # calculate curf distance
-      d = curvdist(x.abs, q.dot(norm))
+      d = curvdist(x.abs, q.dot(@normal))
       
       # calculate coordinate of uvpoint
       return Geom::Point3d.new([
         sign * d / TEXTURE_SIZE['x'], 
-        op.dot(orient) / TEXTURE_SIZE['y'], 
+        op.dot(@orient) / TEXTURE_SIZE['y'], 
         1])
     end
   end

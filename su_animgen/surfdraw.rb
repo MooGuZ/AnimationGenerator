@@ -7,12 +7,17 @@ module AnimationGenerator
   # Class Start: SurfConfig
   class SurfConfig    
     private
+    # surfdraw : interface
+    def surfdraw()
+      method(@type.to_sym).call()
+    end
+    
     # surface : gaussian
-    def gaussian(params, thickness, accuracy)
+    def gaussian()
       # get parameters from Hash
-      curvature = Float(params["curvature"])
-      height    = Float(params["height"])
-      radius    = Float(params["radius"])
+      curvature = Float(@params["curvature"])
+      height    = Float(@params["height"])
+      radius    = Float(@params["radius"])
       
       # check availability of input arguments : HEIGHT
       raise ArgumentError, "CURVATURE cannot be 0 for Gaussian surface" if curvature == 0
@@ -25,7 +30,7 @@ module AnimationGenerator
       end
       
       # calculate number of segments
-      nseg = [(radius / accuracy).ceil, MAX_SEG_NUM].min
+      nseg = [(radius / ACCURACY).ceil, MAX_SEG_NUM].min
       # generate curve points
       curvPts = (0..nseg).map do |i|
         x = i * radius / nseg
@@ -38,7 +43,7 @@ module AnimationGenerator
       case DRAWMETHOD
       when :surface
         # define shifting transformation
-        t = Geom::Transformation.translation([0, 0, -thickness])
+        t = Geom::Transformation.translation([0, 0, -THICKNESS])
         # attach assistant points
         curvPts += curvPts.map{|p| p.transform(t)}.reverse
       when :shape
@@ -56,10 +61,10 @@ module AnimationGenerator
     end
     
     # surface : sphere
-    def sphere(params, thickness, accuracy)
+    def sphere()
       # get parameters from Hash
-      curvature = Float(params["curvature"])
-      angle     = params["angle"] * Math::PI / 360
+      curvature = Float(@params["curvature"])
+      angle     = @params["angle"] * Math::PI / 360
       
       # input arugment check
       raise ArgumentError, "CURVATURE cannot be 0 for Sphere surface" if curvature == 0
@@ -70,7 +75,7 @@ module AnimationGenerator
       # calculate radius
       radius = 1 / curvature.abs
       # calculate number of segments
-      nseg = [(angle * radius / accuracy).ceil, MAX_SEG_NUM].min
+      nseg = [(angle * radius / ACCURACY).ceil, MAX_SEG_NUM].min
       # generate curve points
       curvPts = (0..nseg).map do |i|
         theta = Math::PI / 2 - i * angle / nseg 
@@ -88,8 +93,8 @@ module AnimationGenerator
         # geometry center of curve
         center = (curvature > 0) ? [0, 0, 0] : [0, 0, radius]
         # create transformation for generating closed curve
-        t = (curvature > 0) ? Geom::Transformation.scaling(center, 1 - thickness / radius)
-                            : Geom::Transformation.scaling(center, 1 + thickness / radius)
+        t = (curvature > 0) ? Geom::Transformation.scaling(center, 1 - THICKNESS / radius)
+                            : Geom::Transformation.scaling(center, 1 + THICKNESS / radius)
         # generate assistant points by transformation and attach to curve points
         curvPts += curvPts.map{|p| p.transform(t)}.reverse
       when :shape
@@ -98,8 +103,8 @@ module AnimationGenerator
         elsif angle <= Math::PI / 2
           curvPts << Geom::Point3d.new([curvPts.last.x, 0, 0])
         else
-          curvPts << Geom::Point3d.new([radius + thickness, 0, curvPts.last.z])
-          curvPts << Geom::Point3d.new([radius + thickness, 0, 0])
+          curvPts << Geom::Point3d.new([radius + THICKNESS, 0, curvPts.last.z])
+          curvPts << Geom::Point3d.new([radius + THICKNESS, 0, 0])
         end
       else
         raise ArgumentError, 'Undefined drawing method!'
@@ -112,12 +117,12 @@ module AnimationGenerator
     end
     
     # face : circle
-    def circle(params, unused, accuracy)
+    def circle()
       # get paramter from hash
-      radius = Float(params["radius"])
+      radius = Float(@params["radius"])
       
       # calculate number of segments
-      nseg = (Math::PI * radius / accuracy).ceil
+      nseg = (Math::PI * radius / ACCURACY).ceil
       # generate points
       pts = (0..nseg).map do |i|
         theta = 2 * Math::PI * i / nseg
@@ -131,10 +136,10 @@ module AnimationGenerator
     end
     
     # face : rectangle
-    def rectangle(params, *unused)
+    def rectangle()
       # get paramter from hash
-      width  = Float(params["width"]) / 2
-      height = Float(params["height"]) / 2
+      width  = Float(@params["width"]) / 2
+      height = Float(@params["height"]) / 2
       
       # generate points
       pts = [

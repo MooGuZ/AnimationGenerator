@@ -11,7 +11,7 @@ module AnimationGenerator
   class SurfConfig
     # attributions
     attr :type, :sym, :texture, :position,
-         :normal, :params, :suobj
+         :normal, :orient, :params, :suobj
          
     # constructor: from xml branch
     def initialize(node)
@@ -33,8 +33,8 @@ module AnimationGenerator
       elist = node.elements
       # must-have parameters of a surface
       @texture  = elist["texture"].text.downcase
-      @position = elist["position"].text.to_a
-      @normal   = elist["normal"].text.to_a
+      @position = Geom::Point3d.new(elist["position"].text.to_a)
+      @normal   = Geom::Vector3d.new(elist["normal"].text.to_a).normalize
       # load other parameters
       @params = Hash.new
       # parameters for surface
@@ -49,25 +49,20 @@ module AnimationGenerator
                        elist[key].text.to_a :
                        elist[key].text.to_f
       end
+      # initialize orient as nil
+      @orient = nil
       # initialize sketchup obj to nil
       @suobj = nil
     end
     
     # surface drawing
-    def draw(thickness = THICKNESS, accuracy = ACCURACY)
+    def draw()
       # construct corresponding sketchup objects
       pos  = Geom::Point3d.new(@position)
       norm = Geom::Vector3d.new(@normal).normalize
       
-      # ensure every parameter for calculation is Float
-      thichness = Float(thickness)
-      accuracy  = Float(accuracy)
-      
-      # get curve function
-      cfunc = method(@type.to_sym)
-      
       # calculate closed curve points in canonical space
-      curvPts, range, flat = cfunc.call(@params, thickness, accuracy)
+      curvPts, range, flat = surfdraw()
       
       # calculate coordinates in sketchup space
       zaxis = norm
@@ -89,6 +84,9 @@ module AnimationGenerator
       end
       # form transformation transform canonial space to sketchup space
       trans = Geom::Transformation.new(xaxis, yaxis, zaxis, orgpt)
+      
+      # setup orient
+      @orient = yaxis
       
       # [TODROP] complete the other half for plane-symmetric beform transformation
       curvPts = xcomplete(curvPts[0..(curvPts.size-2)]) if !flat && @sym == "plane"
@@ -146,7 +144,7 @@ module AnimationGenerator
         @suobj.entities.each do |e| 
           if e.is_a?(Sketchup::Face)
             # calculate uvpoints of this face
-            uvpoint = uvmap(e, @sym, pos, norm, yaxis)
+            uvpoint = uvmap(e)
             # assign texture position of this face
             e.position_material(mt, uvpoint, true)
             e.position_material(mt, uvpoint, false)
