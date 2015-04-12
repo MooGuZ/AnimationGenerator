@@ -6,7 +6,8 @@
 # MooGu Z. <hzhu@case.edu>
 # Apr 11, 2015
 
-require "su_animgen/settings"
+# load settings
+require "settings"
 
 module AnimationGenerator
   # class start: SurfConfig

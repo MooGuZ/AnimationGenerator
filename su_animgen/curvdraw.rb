@@ -4,9 +4,10 @@
 # MooGu Z. <hzhu@case.edu>
 # Apr 11, 2015
 
+# load sketchup lib
 require "sketchup"
-
-require "su_animgen/settings"
+# load settings
+require "settings"
 
 # this file contains all the specific surface drawing method of AnimationGenerator
 module AnimationGenerator

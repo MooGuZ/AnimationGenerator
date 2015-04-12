@@ -6,14 +6,17 @@
 # MooGu Z. <hzhu@case.edu>
 # Apr 11, 2015
 
-require "sketchup"
+# load system lib
 require 'fileutils'
 require "rexml/document"
-
-require "su_animgen/tools"
-require "su_animgen/settings"
-require "su_animgen/surfconfig"
-require "su_animgen/camconfig"
+# load sketchup lib
+require "sketchup"
+# load plug-in lib
+require "tools"
+require "surfconfig"
+require "camconfig"
+# load settings
+require "settings"
 
 module AnimationGenerator
   # Class Start: ModelConfig

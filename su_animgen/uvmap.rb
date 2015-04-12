@@ -9,10 +9,11 @@
 # MooGu Z. <hzhu@case.edu>
 # Apr 11, 2015
 
+# load sketchup lib
 require "sketchup"
-
-require "su_animgen/settings"
-require "su_animgen/curvdist"
+# load plug-in lib
+require "curvdist"
+# load settings
 
 module AnimationGenerator
   # class start: SurfConfig

@@ -3,32 +3,11 @@
 # MooGu Z. <hzhu@case.edu>
 # Version 0.0.1 - March 14, 2015
 
-# load sketchup library
-require "sketchup"
-# load tools
-require "su_animgen/tools"
-# load CSVTable class definition
-require "su_animgen/csvtable"
-# load settings of Animation Generator
-require "su_animgen/settings"
-# load SurfConfig class definition
-require "su_animgen/surfconfig"
-# load curves drawing methods
-require "su_animgen/curvdraw"
-# load converting method from curve to surface
-require "su_animgen/curv2surf"
-# load uvmap calculating methods
-require "su_animgen/uvmap"
-# load curve length calculating methods
-require "su_animgen/curvdist"
-# load ModelConfig class definition
-require "su_animgen/modelconfig"
-# load CamConfig class definition
-require "su_animgen/camconfig"
-# load AnimConfig class definition
-require "su_animgen/animconfig"
-# load AnimGen class definition
-require "su_animgen/animgen"
-# load trajectory calculating methods
-require "su_animgen/trajcalc"
+# add animation generator's plugin folder to load path
+$:.unshift File.join(File.dirname(__FILE__),"su_animgen")
+
+# load model configuration class
+require "modelconfig"
+
+# end
 

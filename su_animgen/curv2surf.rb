@@ -9,9 +9,10 @@
 # MooGu Z. <hzhu@case.edu>
 # Apr 11, 2015
 
+# load sketchup lib
 require "sketchup"
-
-require "su_animgen/settings"
+# load settings
+require "settings"
 
 module AnimationGenerator
   # class start: SurfConfig

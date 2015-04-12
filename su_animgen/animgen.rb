@@ -4,12 +4,15 @@
 # MooGu Z. <hzhu@case.edu>
 # Apr 11, 2015
 
-require "sketchup"
+# load system lib
 require "fileutils"
-
-require "su_animgen/tools"
-require "su_animgen/settings"
-require "su_animgen/csvtable"
+# load sketchup lib
+require "sketchup"
+# load plug-in lib
+require "tools"
+require "csvtable"
+# load settings
+require "settings"
 
 module AnimationGenerator
   # class start: AnimGen

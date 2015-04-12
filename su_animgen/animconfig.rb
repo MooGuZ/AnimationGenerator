@@ -5,11 +5,14 @@
 # MooGu Z. <hzhu@case.edu>
 # Apr 11, 2015
 
-require "sketchup"
+# load system lib
 require "rexml/document"
-
-require "su_animgen/tools"
-require "su_animgen/settings"
+# load sketchup lib
+require "sketchup"
+# load plug-in lib
+require "tools"
+# load settings
+require "settings"
 
 module AnimationGenerator
 	# class start: AnimConfig

@@ -4,7 +4,9 @@
 # MooGu Z. <hzhu@case.edu>
 # Mar 27, 2015
 
+# load system lib
 require "digest"
+# load sketchup lib
 require "sketchup"
 
 module AnimationGenerator 
