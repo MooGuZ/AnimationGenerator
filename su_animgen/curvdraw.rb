@@ -110,7 +110,7 @@ module AnimationGenerator
         Geom::Point3d.new([ width,  height, 0])
       ]
       
-      return pts, Math.sqrt(width**2, height**2), true
+      return pts, Math.sqrt(width**2 + height**2), true
     end
     
   end

@@ -6,6 +6,8 @@
 # MooGu Z. <hzhu@case.edu>
 # Apr 11, 2015
 
+# load system lib
+require "matrix"
 # load settings
 require "settings"
 
@@ -20,11 +22,32 @@ module AnimationGenerator
     end
     
     # distgaussian : distance estimation on gaussian curve
-    def distgaussian(x, z)
+    def distgaussian(r, h)
       # gaussian function would be very hard to accurately calculate
       # the length of the curve, however, the euclidian distance is
       # quite a good approximation. Here, I just adopt it.
-      return Math.sqrt(x**2 + z**2)
+      # return Vector[x,z].norm
+      
+      # alternative solution : use segments simulate the distances
+      # ----------------------------------------------------------
+      nseg = 13
+      # get curve parameters
+      curvature = @params["curvature"]
+      height    = @params["height"]
+      # initialize distance and point record
+      dist = 0
+      prcd = Vector[0,height]
+      # generate curve points
+      (1..nseg).map do |i|
+        x = i * r / nseg
+        z = height * Math.exp((-x**2 * curvature) / (2 * height))
+        # update distance
+        dist += (Vector[x,z] - prcd).norm
+        # update point record
+        prcd = Vector[x,z]
+      end
+      # return distance
+      return dist
     end
     
     # distsphere : distance calculation on sphere curve
