@@ -75,14 +75,14 @@ module AnimationGenerator
       # vector op : from origin to point
       op = point - @position
       # projection of vector op to x-z plane
-      q = planeproj(op, @orient)
+      q = planeproj(op, @normal)
       # projection to x axis
       x = q.dot(@orient.cross(@normal))
       # get sign of q to xaxis
       sign = x >= 0 ? 1.0 : -1.0
       
       # calculate curf distance
-      d = curvdist(x.abs, q.dot(@normal))
+      d = curvdist(x.abs, op.dot(@normal))
       
       # calculate coordinate of uvpoint
       return Geom::Point3d.new([

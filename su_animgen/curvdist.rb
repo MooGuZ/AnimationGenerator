@@ -22,7 +22,7 @@ module AnimationGenerator
     end
     
     # distgaussian : distance estimation on gaussian curve
-    def distgaussian(r, h)
+    def distgaussian(x, z)
       # gaussian function would be very hard to accurately calculate
       # the length of the curve, however, the euclidian distance is
       # quite a good approximation. Here, I just adopt it.
@@ -39,13 +39,17 @@ module AnimationGenerator
       prcd = Vector[0,height]
       # generate curve points
       (1..nseg).map do |i|
-        x = i * r / nseg
-        z = height * Math.exp((-x**2 * curvature) / (2 * height))
+        r = i * x / nseg
+        h = height * Math.exp((-r**2 * curvature.abs) / (2 * height))
         # update distance
-        dist += (Vector[x,z] - prcd).norm
+        dist += (Vector[r,h] - prcd).norm
         # update point record
-        prcd = Vector[x,z]
+        prcd = Vector[r,h]
       end
+      
+      # show information
+      puts "X : #{x} | Z : #{z} | DIST : #{dist} | NORM : #{Vector[x,z].norm}"
+      
       # return distance
       return dist
     end

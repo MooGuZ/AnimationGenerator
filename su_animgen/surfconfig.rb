@@ -74,7 +74,7 @@ module AnimationGenerator
       norm = Geom::Vector3d.new(@normal).normalize
       
       # calculate closed curve points in canonical space
-      curvPts, range, flat = curvdraw()
+      curvPts, offset, flat = curvdraw()
       
       # calculate coordinates in sketchup space
       zaxis = norm
@@ -87,10 +87,7 @@ module AnimationGenerator
               planeproj(MAIN_ORIENT,norm,AUXL_ORIENT).normalize
       xaxis = yaxis.cross(zaxis)
       # calculate origin point in sketchup space
-      orgpt = pos
-      unless flat
-        orgpt -= norm.transform(Geom::Transformation.scaling(curvPts[0].z))
-      end
+      orgpt = pos - norm.transform(Geom::Transformation.scaling(offset))
       # form transformation transform canonial space to sketchup space
       trans = Geom::Transformation.new(xaxis, yaxis, zaxis, orgpt)
       

@@ -42,7 +42,7 @@ module AnimationGenerator
       end
 
       # return curve points and radius of surface
-      return curvPts, radius, false
+      return curvPts, ((curvature > 0) ? height : 0), false
     end
     
     # surface : sphere
@@ -69,11 +69,9 @@ module AnimationGenerator
                             : (1 - Math.sin(theta)) * radius
         Geom::Point3d.new([x, 0, z])
       end
-      # calculate the range of surface
-      range = (angle <= Math::PI / 2) ? curvPts.last.x : radius
 
       # return curve points
-      return curvPts, range, false 
+      return curvPts, ((curvature > 0) ? radius : 0), false 
     end
     
     # face : circle
@@ -92,7 +90,7 @@ module AnimationGenerator
           0])
       end
       
-      return pts, radius, true
+      return pts, 0, true
     end
     
     # face : rectangle
@@ -110,7 +108,7 @@ module AnimationGenerator
         Geom::Point3d.new([ width,  height, 0])
       ]
       
-      return pts, Math.sqrt(width**2 + height**2), true
+      return pts, 0, true
     end
     
   end
