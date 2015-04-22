@@ -28,25 +28,6 @@ module AnimationGenerator
     def initialize(node)
       # ------- fundamental info -------
       @name = node.attributes["name"]
-      # ------- load texture -------
-      # get material handle of SketchUp
-      mts = Sketchup.active_model.materials
-      # load materials with specific texture
-      node.elements.each("texture") do |t|
-        tname = t.attributes["name"]
-        # add new material if not exist
-        unless mts[tname]
-          # add a new material
-          mt = mts.add(tname)
-          # search for texture file
-          tfile = File.exist?(t.text) ? t.text : File.expand_path(t.text)
-          tfile = File.join(PATH["texture"], t.text) unless File.exist?(tfile)
-          # assigne texture file to it
-          mt.texture = tfile
-          # show information
-          puts "Loaded Texture : #{tname}"
-        end
-      end 
       # ------- load surface -------
       # initialize surface list
       @surflist = Array.new
@@ -97,6 +78,28 @@ module AnimationGenerator
         
         # initialize array of instances of ModelConfig
         marr = Array.new
+
+        # load texture library
+        # --------------------
+        # get material handle of SketchUp
+        mts = Sketchup.active_model.materials
+        # load materials with specific texture
+        config.elements.each("texture") do |t|
+          tname = t.attributes["name"]
+          # add new material if not exist
+          unless mts[tname]
+            # add a new material
+            mt = mts.add(tname)
+            # search for texture file
+            tfile = File.exist?(t.text) ? t.text : File.expand_path(t.text)
+            tfile = File.join(PATH["texture"], t.text) unless File.exist?(tfile)
+            # assigne texture file to it
+            mt.texture = tfile
+            # show information
+            puts "Loaded Texture : #{tname}"
+          end
+        end 
+
         # generate ModelConfig instance for each model node
         config.elements.each("model") {|m| marr << ModelConfig.new(m)}
         

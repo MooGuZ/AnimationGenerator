@@ -47,9 +47,6 @@ module AnimationGenerator
         prcd = Vector[r,h]
       end
       
-      # show information
-      puts "X : #{x} | Z : #{z} | DIST : #{dist} | NORM : #{Vector[x,z].norm}"
-      
       # return distance
       return dist
     end

@@ -96,7 +96,7 @@ module AnimationGenerator
       
       # extend curve points in x-axis for plane-symmetric surface
       curvPts = xcomplete(curvPts) if !flat && @sym == "plane"
-      # transform curve points to sketchup space
+      # transform curve points to sketchup space (Don't use 'transform!', it sometime fail)
       curvPts = curvPts.map {|p| p.transform(trans)}
       
       # create a group for this surface
