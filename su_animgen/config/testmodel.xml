@@ -3,8 +3,19 @@
   <texture name="PinkUniform">pink_uniform.png</texture>
   <texture name="HighCow">cow_highcorr.jpg</texture>
   <texture name="LowCow">cow_lowcorr.jpg</texture>
+  
+  <surflib name="ground" type="Rectangle">
+    <position>[0,0,-15]</position>
+    <normal>[0,0,1]</normal>
+    <width>25</width>
+    <height>25</height>
+    <orient>0</orient>
+    <texture>PinkGaussian</texture>
+  </surflib>
 
-  <model name="Gaussian-Surfaces">    
+  <model name="Gaussian-Surfaces"> 
+    <surface name="ground"/>
+     
     <surface type="Gaussian">
       <position>-2,-2,-2</position>
       <normal>1,1,1</normal>
@@ -27,11 +38,11 @@
 
     <camera aspratio="1.0" fov="30" imwidth="35.0">
       <animation trajectory="line">
-	<eye>0,0,0</eye>
-	<target>-2,-2,-2</target>
-	<up>0,0,1</up>
-	<direction>1,0,0</direction>
-	<velocity>-0.5,0.5,1,2</velocity>
+        <eye>0,0,0</eye>
+        <target>-2,-2,-2</target>
+        <up>0,0,1</up>
+        <direction>1,0,0</direction>
+        <velocity>-0.5,0.5,1,2</velocity>
       </animation>
     </camera>
   </model>
@@ -71,11 +82,11 @@
     
     <camera aspratio="1.0" fov="30" imwidth="35">
       <animation trajectory="line">
-	<eye>0,0,0</eye>
-	<target>-6,6,0</target>
-	<up>0,0,1</up>
-	<direction>1,0,0</direction>
-	<velocity>0.5,5</velocity>
+        <eye>0,0,0</eye>
+        <target>-6,6,0</target>
+        <up>0,0,1</up>
+        <direction>1,0,0</direction>
+        <velocity>0.5,5</velocity>
       </animation>
     </camera>
   </model>
@@ -125,11 +136,11 @@
 
     <camera aspratio="1.0" fov="60" imwidth="35">
       <animation trajectory="line">
-	<eye>0,0,0</eye>
-	<target>10,0,0</target>
-	<up>0,0,1</up>
-	<direction>0,0,1</direction>
-	<velocity>3</velocity>
+        <eye>0,0,0</eye>
+        <target>10,0,0</target>
+        <up>0,0,1</up>
+        <direction>0,0,1</direction>
+        <velocity>3</velocity>
       </animation>
     </camera>
   </model>

@@ -1,0 +1,89 @@
+default namespace = ""
+
+start =
+  element config {
+    attribute name { text }?,
+    element texture {
+      attribute name { xsd:ID },
+      xsd:string
+    }*,
+    element surflib {
+      attribute name { xsd:ID },
+      surfconfig
+    }*,
+    element model {
+      attribute name { text},
+      element surface {
+        (surfconfig
+          | attribute name { xsd:IDREF })
+      }*,
+      element camera {
+        attribute aspratio { xsd:decimal }?,
+        attribute fov { xsd:decimal }?,
+        attribute imwidth { xsd:decimal }?,
+        element animation {
+          attribute trajectory { text },
+          element eye { text },
+          element target { text },
+          element up { text },
+          (shiftparams
+              | approachparams
+              | rotateparams
+              | lineparams)
+        }+
+      }
+    }+
+  }
+
+gaussianparams = (
+    element curvature { xsd:decimal },
+    element height { xsd:decimal },
+    element radius { xsd:decimal }
+    )
+      
+sphereparams = (
+    element curvature { xsd:decimal },
+    element angle { xsd:decimal }
+    )
+    
+circleparams = (
+    element radius { xsd:decimal }
+    )
+    
+rectparams = (
+    element width { xsd:decimal },
+    element height { xsd:decimal },
+    element orient { xsd:decimal }
+    )
+  
+planesymparams = (
+    element orient { xsd:decimal },
+    element symrange { xsd:decimal }
+    )
+      
+shiftparams = (
+    element direction { text },
+    element velocity { text }
+    )
+    
+approachparams = (element velocity { text })
+
+rotateparams = (element velocity { text })
+    
+lineparams = (
+    element direction { text },
+    element velocity { text }
+    )
+    
+surfconfig = (
+    attribute sym { text }?,
+    attribute type { text },
+    element position { text },
+    element normal { text },
+    (gaussianparams
+        | sphereparams
+        | circleparams
+        | rectparams),
+    (planesymparams)?,
+    element texture { xsd:IDREF }
+    )

@@ -11,6 +11,7 @@ require "sketchup"
 # load plug-in lib
 require "tools"
 require "csvtable"
+require "trajcalc"
 # load settings
 require "settings"
 

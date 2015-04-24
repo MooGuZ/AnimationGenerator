@@ -11,6 +11,7 @@ require "sketchup"
 # load plug-in lib
 require "csvtable"
 require "animconfig"
+require "animgen"
 # load settings
 require "settings"
 

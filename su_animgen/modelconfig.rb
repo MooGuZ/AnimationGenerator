@@ -32,7 +32,20 @@ module AnimationGenerator
       # initialize surface list
       @surflist = Array.new
       # read surface one by one
-      node.elements.each("surface") {|s| @surflist << SurfConfig.new(s)}
+      node.elements.each("surface") do |s|
+        if s.attributes["name"]
+          # get surface name
+          sname = s.attributes["name"].downcase
+          # check existence of attribution "name"
+          raise ArgumentError, "surface #{sname} do not found!" \
+            unless @@surflib[sname]
+          # copy surface from surface lib
+          @surflist << @@surflib[sname].clone
+        else
+          # load surface by configuration
+          @surflist << SurfConfig.new(s)
+        end
+      end
       # ------- load camera -------
       @camera = CamConfig.new(node.elements["camera"])
       # ------- show information -------
@@ -61,6 +74,9 @@ module AnimationGenerator
     
     # define class method as the file system interface
     class << self
+      # static array of surface libarary
+      @@surflib = Hash.new()
+      
       # load function to load model configurations from xml file
       def load(fname)
         # search for configuration file
@@ -85,7 +101,7 @@ module AnimationGenerator
         mts = Sketchup.active_model.materials
         # load materials with specific texture
         config.elements.each("texture") do |t|
-          tname = t.attributes["name"]
+          tname = t.attributes["name"].downcase
           # add new material if not exist
           unless mts[tname]
             # add a new material
@@ -98,7 +114,20 @@ module AnimationGenerator
             # show information
             puts "Loaded Texture : #{tname}"
           end
-        end 
+        end
+        
+        # load surface library
+        # --------------------
+        config.elements.each("surflib") do |sl|
+          slname = sl.attributes["name"].downcase
+          # add new surface to surface library if not exist before
+          unless @@surflib[slname]
+            # add new surface
+            @@surflib[slname] = SurfConfig.new(sl)
+            # print information
+            puts "Loaded Surface : #{slname} to Surface Library"
+          end
+        end
 
         # generate ModelConfig instance for each model node
         config.elements.each("model") {|m| marr << ModelConfig.new(m)}
