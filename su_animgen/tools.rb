@@ -81,16 +81,6 @@ module AnimationGenerator
     return vec - norm.transform(Geom::Transformation.scaling(vec % norm))
   end
   
-  # xcomplete: create x-axis mirror of points to complete points set
-  def xcomplete(points)
-    # define mirror transformation
-    trans  = Geom::Transformation.rotation([0,0,0],[0,0,1],Math::PI)
-    # make mirror points
-    mirror = points.map{|pt| pt.transform(trans)}.reverse
-    # combine original and mirror points
-    return mirror[0..(mirror.size-2)] + points
-  end
-  
   # generate permutation of hash table
   def permute(org)
     # initialize output array

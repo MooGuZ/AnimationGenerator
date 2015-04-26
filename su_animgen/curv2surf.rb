@@ -34,6 +34,8 @@ module AnimationGenerator
       radius = curvPts.map{|p| (p - @position).dot(@orient.cross(@normal)).abs}.max
       # calculate how many faces woud generated in a circle
       nface = [MAX_SEG_NUM, (2 * Math::PI * radius / ACCURACY).ceil].min
+      # ensure there are even number of faces
+      nface += 1 if nface.odd?
       # calculate rotation angle for each time
       angle = 2 * Math::PI / nface
       # construct rotation transformation
@@ -82,6 +84,10 @@ module AnimationGenerator
       
       # create faces by translation
       (curvPts.size - 1).times do |i|
+        # if curvPts contains even number of points means the curve is detached
+        # - from y-z plane, then, no face should created between two part of the 
+        # - surface.
+        next if DETACHEDSURF.member?(@type) && (i == (curvPts.size / 2) - 1)
         # points of face
         points = [
           curvPts[i] - shifting,
@@ -89,7 +95,9 @@ module AnimationGenerator
           curvPts[i+1] + shifting,
           curvPts[i+1] - shifting
         ]
-        # add face to sketchup space
+        # add face to sketchup space, the exception of duplicate points should 
+        # - never happen here, because function 'xmirror' and 'curvdraw' should
+        # - eliminate them for plane symmetric condition already
         @suobj.entities.add_face(points)
       end
     end

@@ -65,6 +65,8 @@ module AnimationGenerator
       @orient = nil
       # initialize sketchup obj to nil
       @suobj = nil
+      # create a buffer for calculatine issues
+      @buffer = nil
     end
     
     # surface drawing
@@ -95,7 +97,7 @@ module AnimationGenerator
       @orient = yaxis
       
       # extend curve points in x-axis for plane-symmetric surface
-      curvPts = xcomplete(curvPts) if !flat && @sym == "plane"
+      curvPts = xmirror(curvPts) if !flat && @sym == "plane"
       # transform curve points to sketchup space (Don't use 'transform!', it sometime fail)
       curvPts = curvPts.map {|p| p.transform(trans)}
       
@@ -136,7 +138,27 @@ module AnimationGenerator
           end
         end
       end
-    end 
+      
+      # clear buffer
+      @buffer = nil
+    end
+    
+    private
+    # xmirror: create x-axis mirror of points to complete points set
+    def xmirror(points)
+      # define mirror transformation
+      trans  = Geom::Transformation.rotation([0,0,0],[0,0,1],Math::PI)
+      # make mirror points
+      mirror = points.map{|pt| pt.transform(trans)}.reverse
+      # check distance of last element of reversed-mirror and first element of original
+      if DETACHEDSURF.member?(@type)
+        # combine complete original and mirror points
+        return mirror + points
+      else
+        # combine original and mirror points without last point in mirror
+        return mirror[0..(mirror.size-2)] + points
+      end
+    end
   end
   # class end: SurfConfig
 end

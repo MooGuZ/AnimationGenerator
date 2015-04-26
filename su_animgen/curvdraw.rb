@@ -80,7 +80,7 @@ module AnimationGenerator
       radius = Float(@params["radius"])
       
       # calculate number of segments
-      nseg = (Math::PI * radius / ACCURACY).ceil
+      nseg = (2 * Math::PI * radius / ACCURACY).ceil
       # generate points
       pts = (0..nseg).map do |i|
         theta = 2 * Math::PI * i / nseg
@@ -111,6 +111,31 @@ module AnimationGenerator
       return pts, 0, true
     end
     
+    # surface : Donut
+    def donut()
+      # get parameters from hash
+      offset = @params["offset"]
+      radius = @params["radius"]
+      
+      # check the parameters
+      if offset <= radius
+        raise ArgumentError, "radius of donut should be smaller than its offset"
+      end
+      
+      # calculate number of segment for drawing circle
+      nseg = 2 * (Math::PI * radius / ACCURACY).ceil
+      # generate points
+      pts = (0..nseg).map do |i|
+        theta = 2 * Math::PI * i / nseg
+        Geom::Point3d.new([
+          offset + radius * Math.cos(theta),
+          0,
+          radius * Math.sin(theta)
+        ])
+      end
+      
+      return pts, 0, false
+    end    
   end
   # Class End: SurfConfig
 end

@@ -41,8 +41,13 @@ module AnimationGenerator
   SURFPARAM["sphere"]    = ["curvature","angle"]
   SURFPARAM["circle"]    = ["radius"]
   SURFPARAM["rectangle"] = ["width","height","orient"]
+  SURFPARAM["donut"]     = ["offset","radius"]
   # list of available surface type
   SURFTYPE = SURFPARAM.keys
+  # ...................................................
+  # add information of surfaces detached from y-z plane
+  DETACHEDSURF = Array.new
+  DETACHEDSURF << "donut"
   # ............................................
   # parameter list of different symmetric policy
   SYMPARAM = Hash.new

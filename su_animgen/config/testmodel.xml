@@ -144,4 +144,44 @@
       </animation>
     </camera>
   </model>
+  
+  <model name="Donut Party">
+    <surface type="Donut">
+      <position>[0,0,0]</position>
+      <normal>[0,0,1]</normal>
+      <radius>2</radius>
+      <offset>20</offset>
+      <texture>LowCow</texture>
+    </surface>
+    
+    <surface type="donut" sym="plane">
+      <position>[0,0,0]</position>
+      <normal>[1,1,0]</normal>
+      <offset>25</offset>
+      <radius>2</radius>
+      <orient>0</orient>
+      <symrange>10</symrange>
+      <texture>HighCow</texture>
+    </surface>
+    
+    <surface type="donut" sym="plane">
+      <position>[0,0,0]</position>
+      <normal>[1,-1,0]</normal>
+      <offset>25</offset>
+      <radius>2</radius>
+      <orient>0</orient>
+      <symrange>10</symrange>
+      <texture>HighCow</texture>
+    </surface>
+    
+    <camera aspratio="1.0" fov="60" imwidth="35">
+      <animation trajectory="line">
+        <eye>0,0,0</eye>
+        <target>7,0,0</target>
+        <up>0,0,1</up>
+        <direction>0,0,1</direction>
+        <velocity>3</velocity>
+      </animation>
+    </camera>
+  </model>
 </config>

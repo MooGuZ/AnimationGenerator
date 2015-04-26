@@ -21,7 +21,7 @@ module AnimationGenerator
       return method(("dist"+@type).to_sym).call(x, z)
     end
     
-    # distgaussian : distance estimation on gaussian curve
+    # ===============================================================
     def distgaussian(x, z)
       # gaussian function would be very hard to accurately calculate
       # the length of the curve, however, the euclidian distance is
@@ -51,7 +51,7 @@ module AnimationGenerator
       return dist
     end
     
-    # distsphere : distance calculation on sphere curve
+    # ===============================================================
     def distsphere(x, z)
       # get radius of sphere
       radius = 1 / Float(@params["curvature"]).abs
@@ -65,12 +65,33 @@ module AnimationGenerator
       return radius * [angle, Math::PI - angle].min
     end
     
+    # ===============================================================
     def distcircle(x, z)
       return x
     end
     
+    # ===============================================================
     def distrectangle(x, z)
       return x
+    end
+  
+    # ===============================================================
+    def distdonut(x, z)
+      # get parameter of donut curve
+      offset = @params["offset"]
+      radius = @params["radius"]
+      # use ATAN2 method to get the angle of this point
+      angle = Math.atan2(z, x - offset)
+      # [special case] indistinguishable point
+      if (angle.abs - Math::PI).abs <= ZEROTOLERANCE
+        # check the center of surface in buffer and 
+        # - decide the sign of anlge
+        angle = (@buffer - @position).dot(@normal) > 0 ? Math::PI : -Math::PI
+      end
+      # estimate the number of texture cycles
+      nCycle = ((2 * Math::PI * radius) / TEXTURE_SIZE['y']).ceil
+      # return the distance that make the cross section of donut continuous
+      return angle / (2 * Math::PI) * TEXTURE_SIZE['y'] * nCycle
     end
   end
   # class end: SurfConfig

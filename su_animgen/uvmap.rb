@@ -24,6 +24,14 @@ module AnimationGenerator
     def uvmap(face)
       # initialize uvpoint array
       uvpoint = Array.new()
+      # put center vector of current face to buffer area
+      if DETACHEDSURF.member?(@type)
+        center = face.vertices
+                     .map{|v| Geom::Vector3d.new(v.position.to_a)}
+                     .inject(:+)
+                     .transform(Geom::Transformation.scaling(1.0 / face.vertices.size))
+        @buffer = Geom::Point3d.new(center.to_a)
+      end
       # calculate uvposition of each vertices on face
       face.vertices.each do |v|
         # check number of uvpoints in array
@@ -60,7 +68,26 @@ module AnimationGenerator
         sin = q.dot(@orient)
       end
       
-      # return uvpoint
+      # return uvpoints for detached shapes
+      if DETACHEDSURF.member?(@type)
+        # estimate the number of cycles
+        nCycle = ((2 * Math::PI * @params["offset"]) / TEXTURE_SIZE['x']).ceil
+        # calculate angle
+        angle = Math.atan2(sin,cos)
+        # [special case] indistinguishable point
+        if (angle.abs - Math::PI).abs <= ZEROTOLERANCE
+          # check the center of surface in buffer and 
+          # - decide the sign of anlge
+          angle = (@buffer - @position).dot(@orient) > 0 ? Math::PI : -Math::PI
+        end
+        # return detached-mapping uvpoint
+        return Geom::Point3d.new([
+          angle / (2 * Math::PI) * nCycle, 
+          d / TEXTURE_SIZE['y'], 
+          1])
+      end
+      
+      # return normal-mapping uvpoint
       return Geom::Point3d.new([
         d * cos / TEXTURE_SIZE['x'], 
         d * sin / TEXTURE_SIZE['y'],
