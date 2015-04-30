@@ -37,6 +37,7 @@
     </surface>
 
     <camera aspratio="1.0" fov="30" imwidth="35.0">
+      <render EdgeColorMode="2"/>
       <animation trajectory="line">
         <eye>0,0,0</eye>
         <target>-2,-2,-2</target>

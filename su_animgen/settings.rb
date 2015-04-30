@@ -70,6 +70,9 @@ module AnimationGenerator
   DEFAULT["camera"]["aspratio"] = 1.0
   DEFAULT["camera"]["fov"]      = 30.0
   DEFAULT["camera"]["imwidth"]  = 35.0
+  # default value : render
+  DEFAULT["render"] = Hash.new
+  DEFAULT["render"]["DrawSilhouettes"] = false
   
   # animation related information
   # -----------------------------

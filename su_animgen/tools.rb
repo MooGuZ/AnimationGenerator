@@ -29,6 +29,11 @@ module AnimationGenerator
     def array?
       return self.include?(',')
     end
+    
+    # number?: decide a string represent a number
+    def number?
+      return /\A[-+]?\d*[\.]?\d+\z/ === self
+    end
   end
   
   # packed?: check multiple values for a key
