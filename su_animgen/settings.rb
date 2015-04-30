@@ -25,11 +25,14 @@ module AnimationGenerator
   # ---------------------------
   # accuracy of curve in drawing
   ACCURACY    = 0.1
-  # maximum segment number of a drawing element
-  MAX_SEG_NUM = 30
   # base-orientations
   MAIN_ORIENT = [0,0,1]
   AUXL_ORIENT = [1,0,0]
+  # circle segment number restriction
+  CIRCLE_SEG_NUM_MIN = 16
+  CIRCLE_SEG_NUM_MAX = 72
+  # segment per sigma of gaussian curve
+  GAUSSIAN_SEG_PER_SIG = 13
   # texture size
   TEXTURE_SIZE = {'x' => 7, 'y' => 7}
   # the threshold when decise to be zero

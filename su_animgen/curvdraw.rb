@@ -31,8 +31,9 @@ module AnimationGenerator
       raise ArgumentError, "CURVATURE cannot be 0 for Gaussian surface" if curvature == 0
       raise ArgumentError, 'HEIGHT cannot be 0 for Gaussian surface' if height == 0
       
-      # calculate number of segments
-      nseg = [(radius / ACCURACY).ceil, MAX_SEG_NUM].min
+      # calculate number of segments according to variance (height / curvature)
+      # nseg = (radius / ACCURACY).ceil
+      nseg = (GAUSSIAN_SEG_PER_SIG * radius / Math.sqrt((height / curvature).abs)).ceil
       # generate curve points
       curvPts = (0..nseg).map do |i|
         x = i * radius / nseg
@@ -50,7 +51,7 @@ module AnimationGenerator
       # get parameters from Hash
       curvature = @params["curvature"]
       angle     = @params["angle"] * Math::PI / 360
-      
+
       # input arugment check
       raise ArgumentError, "CURVATURE cannot be 0 for Sphere surface" if curvature == 0
       
@@ -59,17 +60,28 @@ module AnimationGenerator
       
       # calculate radius
       radius = 1 / curvature.abs
+      # calculate delta angle for each face
+      dangle = Math::PI / (2 * (Math::PI * radius / ACCURACY / 2.0).ceil)
       # calculate number of segments
-      nseg = [(angle * radius / ACCURACY).ceil, MAX_SEG_NUM].min
+      nseg = (angle * radius / ACCURACY).ceil
+      # apply segment restriction
+      nseg = [[nseg, CIRCLE_SEG_NUM_MAX].min, CIRCLE_SEG_NUM_MIN].max
+      # calculate delta angle and calibrate it to make integer faces in pi/2
+      dangle = angle / nseg
+      dangle = (Math::PI / 2) / (Math::PI / 2 / dangle).ceil
+      # recalculate number of segment (may slightly bigger than maximum)
+      nseg = (angle / dangle).ceil
       # generate curve points
       curvPts = (0..nseg).map do |i|
-        theta = Math::PI / 2 - i * angle / nseg 
+        theta = Math::PI / 2 - i * dangle
+        # deal with the overflow
+        theta = (Math::PI / 2 - angle) if theta < (Math::PI / 2 - angle)
+        # calculate coordinates
         x = Math.cos(theta) * radius
         z = (curvature > 0) ? Math.sin(theta) * radius 
                             : (1 - Math.sin(theta)) * radius
         Geom::Point3d.new([x, 0, z])
       end
-
       # return curve points
       return curvPts, ((curvature > 0) ? radius : 0), false 
     end
@@ -81,6 +93,8 @@ module AnimationGenerator
       
       # calculate number of segments
       nseg = (2 * Math::PI * radius / ACCURACY).ceil
+      # apply segment restriction
+      nseg = [[nseg, CIRCLE_SEG_NUM_MAX].min, CIRCLE_SEG_NUM_MIN].max
       # generate points
       pts = (0..nseg).map do |i|
         theta = 2 * Math::PI * i / nseg
@@ -124,6 +138,8 @@ module AnimationGenerator
       
       # calculate number of segment for drawing circle
       nseg = 2 * (Math::PI * radius / ACCURACY).ceil
+      # apply segment restriction
+      nseg = [[nseg, CIRCLE_SEG_NUM_MAX].min, CIRCLE_SEG_NUM_MIN].max
       # generate points
       pts = (0..nseg).map do |i|
         theta = 2 * Math::PI * i / nseg

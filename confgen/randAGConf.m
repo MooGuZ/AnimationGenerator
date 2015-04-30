@@ -1,5 +1,6 @@
 function dom = randAGConf(nmodel, texturePath)
-% RANDAGCONF generate random configuration file in DOM format
+% RANDAGCONF generate random configuration file in DOM format for SketchUp
+% scripts : AnimationGenerator
 %
 % USAGE: DOM = RANDAGCONF(NMODEL, TEXTUREPATH) generate a configuration
 %              with NMODELS, and point texture library to the path
@@ -14,7 +15,7 @@ MAXRADIUS = 10;
 MAXCURVATURE = 5;
 MAXGAUSSHEIGHT = 5;
 AREACENTER = [0,0,9];
-AREARANGE = 5;
+AREARANGE = 7;
 MINVELOCITY = 1;
 MAXVELOCITY = 5;
 MINANGLEV = 15;
@@ -22,8 +23,17 @@ MAXANGLEV = 360;
 
 % set of symmetic, curve, and trajectory types
 symSet  = {'plane', 'axis'};
-curfSet = {'Gaussian', 'Sphere', 'Circle', 'Rectangle'};
+curvSet = {'Gaussian', 'Sphere', 'Circle', 'Rectangle'};
 trajSet = {'line', 'rotate', 'approach', 'shift'};
+
+% specified set for practice
+limitTrajSet = {'line'};
+majorCurvSet = {'Gaussian', 'Sphere'};
+minorCurvSet = {'Circle', 'Rectangle'};
+envTextureSet = {'PINK_GAUSSIAN', 'PINK_UNIFORM'};
+objTextureSet = {'COW_LOWCORR', 'COW_HIGHCORR'};
+% related settings
+majorPortion = 0.7;
 
 % initialize a DOM object
 dom = com.mathworks.xml.XMLUtils.createDocument('config');
@@ -65,7 +75,7 @@ for i = 1 : numel(flist)
     rootNode.appendChild(textureNode);
 end
 
-% define a helper functions
+% define set of helper functions
 chooseOne = @(S) S{ceil(rand() * numel(S))};
 normvec = @(vec) vec / norm(vec(:));
 randDirection = @() normvec(randn(1,3));
@@ -74,18 +84,39 @@ randPosition = @(center, radius) ...
 randPositive = @(lowBound, upBound) ...
     lowBound + (upBound - lowBound) * rand();
 
+% add a surface library as environment
+surflibNode = dom.createElement('surflib');
+surflibNode.setAttribute('name', 'ENVIRONMENT');
+surflibNode.setAttribute('type', 'Rectangle');
+addChildNode(dom, surflibNode, 'position', [0,0,0]);
+addChildNode(dom, surflibNode, 'normal', [0,0,1]);
+addChildNode(dom, surflibNode, 'width', 100);
+addChildNode(dom, surflibNode, 'height', 100);
+addChildNode(dom, surflibNode, 'orient', 0);
+addChildNode(dom, surflibNode, 'texture', chooseOne(envTextureSet));
+rootNode.appendChild(surflibNode);
+
 % creat NMODEL model nodes randomly
 for i = 1 : nmodel
     modelNode = dom.createElement('model');
     % set model name as RANDOM-<#>
     modelNode.setAttribute('name', sprintf('RANDOM-%d', i));
     
+    % add environment surfaces
+    surfNode = dom.createElement('surface');
+    surfNode.setAttribute('name', 'ENVIRONMENT');
+    modelNode.appendChild(surfNode);
+    
     % generate surface node
     % ---------------------
     % create surface branch
     surfNode = dom.createElement('surface');
     % randomly set surface curve type
-    curvType = chooseOne(curfSet);
+    if rand() < majorPortion
+        curvType = chooseOne(majorCurvSet);
+    else
+        curvType = chooseOne(minorCurvSet);
+    end
     surfNode.setAttribute('type', curvType);
     % add common fields for all curve type
     surfPosition = randPosition(AREACENTER, AREARANGE);
@@ -107,7 +138,7 @@ for i = 1 : nmodel
             addChildNode(dom, surfNode, 'curvature', ...
                 chooseOne({-1.0,1.0}) * randPositive(0, MAXCURVATURE));
             addChildNode(dom, surfNode, 'angle', ...
-                chooseOne({pi/4, pi/2, 3/4 * pi, pi}));
+                chooseOne({90, 180, 270, 360}));
             
         case 'Circle'
             symType = 'axis';
@@ -141,7 +172,7 @@ for i = 1 : nmodel
             error('Unrecognized Symmetric Type : %s\n', symType);
     end
     % add texture field
-    addChildNode(dom, surfNode, 'texture', chooseOne(textureSet));
+    addChildNode(dom, surfNode, 'texture', chooseOne(objTextureSet));
     % append surface node to model
     modelNode.appendChild(surfNode);
     
@@ -159,7 +190,7 @@ for i = 1 : nmodel
     % set up direction to [0,0,1]
     addChildNode(dom, animNode, 'up', [0,0,1]);
     % set trajectory type
-    trajType = chooseOne(trajSet);
+    trajType = chooseOne(limitTrajSet);
     animNode.setAttribute('trajectory', trajType);
     % add fields according to trajectory type
     switch trajType

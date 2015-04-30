@@ -51,13 +51,17 @@ module AnimationGenerator
       # calculate camera position of current frame
       # eye, target, up = method(@anim.trajectory.to_sym).call(
       #   @anim.eye, @anim.target, @anim.up, @anim.params, @ifrm)
-      eye, target, up = trajcalc(@anim, @ifrm)
-      # check intersection
-      return false if intersected?(view.model, view.camera.eye, eye) && @ifrm != 0
-      # set new position of camera
-      view.camera.set(eye, target, up)
-      # show current frame
-      # view.show_frame
+      if @ifrm != 0
+        # calculate trajectory
+        eye, target, up = trajcalc(@anim, @ifrm)
+        # check intersection
+        return false if intersected?(view.model, view.camera.eye, eye)
+        # set new position of camera
+        view.camera.set(eye, target, up)
+      else
+        # initialize camera
+        view.camera.set(@anim.eye, @anim.target, @anim.up)
+      end
       # write image
       view.write_image(
         File.join(@anim.path, "%03d.jpg" % @ifrm),

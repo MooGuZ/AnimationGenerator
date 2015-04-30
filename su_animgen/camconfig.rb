@@ -48,7 +48,7 @@ module AnimationGenerator
       # get active view's handle
       view = Sketchup.active_model.active_view
       # save current camera setting
-      camrecord = view.camera.clone    
+      # camrecord = view.camera.clone    
       # set camera parameters in active view
       view.camera.perspective  = true
       view.camera.aspect_ratio = @aspratio
@@ -67,7 +67,7 @@ module AnimationGenerator
       # write anim-info.csv file
       infotable.write(File.join(outfd,ANIMINFO["filename"]))
       # reset camera according to record
-      view.camera = camrecord
+      # view.camera = camrecord
     end
   end
   # class end: CamConfig

@@ -58,7 +58,8 @@ module AnimationGenerator
       # calculate length of vector
       l = Math.sqrt(x**2 + z**2)
       # deal abnormal case
-      raise ArgumentError, "something wrong in DISTSPHERE" if l > 2 * radius
+      # raise ArgumentError, "something wrong in DISTSPHERE" if l > 2 * radius
+      l = 2 * radius if l > 2 * radius
       # get central angle
       angle = 2 * Math.asin(l / (2 * radius))
       # return curve distance

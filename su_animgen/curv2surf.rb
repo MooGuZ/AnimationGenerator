@@ -29,11 +29,13 @@ module AnimationGenerator
       # get required parameters
       pos  = Geom::Point3d.new(@position)
       norm = Geom::Vector3d.new(@normal).normalize
-      
+
       # radius of curve
       radius = curvPts.map{|p| (p - @position).dot(@orient.cross(@normal)).abs}.max
       # calculate how many faces woud generated in a circle
-      nface = [MAX_SEG_NUM, (2 * Math::PI * radius / ACCURACY).ceil].min
+      nface = (2 * Math::PI * radius / ACCURACY).ceil
+      # apply segment restriction
+      nface = [[nface, CIRCLE_SEG_NUM_MAX].min, CIRCLE_SEG_NUM_MIN].max
       # ensure there are even number of faces
       nface += 1 if nface.odd?
       # calculate rotation angle for each time
@@ -68,7 +70,7 @@ module AnimationGenerator
         end
         # update curve points
         curvPts = nextPts
-      end 
+      end
     end
     
     # c2splane : plane-symmetric version of curv2surf

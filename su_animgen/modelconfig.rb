@@ -125,7 +125,7 @@ module AnimationGenerator
             # add new surface
             @@surflib[slname] = SurfConfig.new(sl)
             # print information
-            puts "Loaded Surface : #{slname} to Surface Library"
+            puts "Loaded Surface : #{slname} [Surface Library]"
           end
         end
 

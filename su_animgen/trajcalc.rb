@@ -37,7 +37,12 @@ module AnimationGenerator
       # get up vector of current camera
       cur_up  = Sketchup.active_model.active_view.camera.up
       # calculate current up vector of camera
-      up  = planeproj(up, target-eye, cur_up) if (target-eye).length
+      # - plan A : minimize rotating effects by project up vector 
+      # -          of last frame to current plane
+      up = planeproj(cur_up, target-eye) if (target-eye).length > ZEROTOLERANCE
+      # - plan B : always keep up vector point to positive z-axis
+      # up  = planeproj(up, target-eye, cur_up) if (target-eye).length > ZEROTOLERANCE
+      
       # return new positions
       return eye, target, up
     end

@@ -14,6 +14,7 @@ require "sketchup"
 # load plug-in lib
 require "curvdist"
 # load settings
+require "settings"
 
 module AnimationGenerator
   # class start: SurfConfig
