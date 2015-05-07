@@ -16,7 +16,7 @@ module AnimationGenerator
     def to_a
       if self.include?("],[") 
         # this is an array of arrays
-        return self.scan(/\[[0-9, ]*\]/)
+        return self.scan(/\[[0-9\.\-, ]*\]/)
                    .map(&:to_a)
       else
         return self.gsub(/[\[\]]/,'')
@@ -56,6 +56,8 @@ module AnimationGenerator
     # regularize points in sketchup space
     from = Geom::Point3d.new(from)
     to   = Geom::Point3d.new(to)
+    # short path for no movement
+    return false if (to - from).length == 0
     # calculate direction vector
     dirt = (to - from).normalize
     # do ray test get intersection point

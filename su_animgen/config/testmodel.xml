@@ -5,17 +5,25 @@
   <texture name="LowCow">cow_lowcorr.jpg</texture>
   
   <surflib name="ground" type="Rectangle">
-    <position>[0,0,-15]</position>
+    <position>[0,0,-10]</position>
     <normal>[0,0,1]</normal>
-    <width>25</width>
-    <height>25</height>
+    <width>17</width>
+    <height>17</height>
     <orient>0</orient>
     <texture>PinkGaussian</texture>
   </surflib>
-
-  <model name="Gaussian-Surfaces"> 
+  
+  <surflib name="sky" type="Circle">
+    <position>[0,0,10]</position>
+    <normal>[0,0,-1]</normal>
+    <radius>17</radius>
+    <texture>PinkUniform</texture>
+  </surflib>
+  
+  <model name="Complete-Test-Case">
     <surface name="ground"/>
-     
+    <surface name="sky"/>
+    
     <surface type="Gaussian">
       <position>-2,-2,-2</position>
       <normal>1,1,1</normal>
@@ -35,20 +43,7 @@
       <symrange>5</symrange>
       <texture>LowCow</texture>
     </surface>
-
-    <camera aspratio="1.0" fov="30" imwidth="35.0">
-      <render EdgeColorMode="2"/>
-      <animation trajectory="line">
-        <eye>0,0,0</eye>
-        <target>-2,-2,-2</target>
-        <up>0,0,1</up>
-        <direction>1,0,0</direction>
-        <velocity>-0.5,0.5,1,2</velocity>
-      </animation>
-    </camera>
-  </model>
-  
-  <model name="Sphere-Surfaces">
+    
     <surface type="Sphere">
       <position>3,-3,0</position>
       <normal>-1,1,0</normal>
@@ -81,72 +76,6 @@
       <texture>PinkGaussian</texture>
     </surface>
     
-    <camera aspratio="1.0" fov="30" imwidth="35">
-      <animation trajectory="line">
-        <eye>0,0,0</eye>
-        <target>-6,6,0</target>
-        <up>0,0,1</up>
-        <direction>1,0,0</direction>
-        <velocity>0.5,5</velocity>
-      </animation>
-    </camera>
-  </model>
-  
-  <model name="Circle-cube">
-    <surface type="Circle">
-      <position>[10,0,0]</position>
-      <normal>[-1,0,0]</normal>
-      <radius>15</radius>
-      <texture>PinkUniform</texture>
-    </surface>
-
-    <surface type="Circle">
-      <position>[-10,0,0]</position>
-      <normal>[1,0,0]</normal>
-      <radius>15</radius>
-      <texture>PinkUniform</texture>
-    </surface>
-
-    <surface type="Circle">
-      <position>[0,10,0]</position>
-      <normal>[0,-1,0]</normal>
-      <radius>15</radius>
-      <texture>PinkUniform</texture>
-    </surface>
-
-    <surface type="Circle">
-      <position>[0,-10,0]</position>
-      <normal>[0,1,0]</normal>
-      <radius>15</radius>
-      <texture>PinkUniform</texture>
-    </surface>
-
-    <surface type="Circle">
-      <position>[0,0,10]</position>
-      <normal>[0,0,-1]</normal>
-      <radius>15</radius>
-      <texture>PinkUniform</texture>
-    </surface>
-
-    <surface type="Circle">
-      <position>[0,0,-10]</position>
-      <normal>[0,0,1]</normal>
-      <radius>15</radius>
-      <texture>PinkUniform</texture>
-    </surface>
-
-    <camera aspratio="1.0" fov="60" imwidth="35">
-      <animation trajectory="line">
-        <eye>0,0,0</eye>
-        <target>10,0,0</target>
-        <up>0,0,1</up>
-        <direction>0,0,1</direction>
-        <velocity>3</velocity>
-      </animation>
-    </camera>
-  </model>
-  
-  <model name="Donut Party">
     <surface type="Donut">
       <position>[0,0,0]</position>
       <normal>[0,0,1]</normal>
@@ -175,13 +104,59 @@
       <texture>HighCow</texture>
     </surface>
     
-    <camera aspratio="1.0" fov="60" imwidth="35">
+    <camera aspratio="1.0" fov="30" imwidth="35.0">
+      <render EdgeColorMode="2"/>
+      
       <animation trajectory="line">
         <eye>0,0,0</eye>
-        <target>7,0,0</target>
+        <target>-2,-2,-2</target>
         <up>0,0,1</up>
-        <direction>0,0,1</direction>
-        <velocity>3</velocity>
+        <direction>1,0,0</direction>
+        <velocity>-0.5,0.5,1,2</velocity>
+      </animation>
+      
+      <animation trajectory="translate">
+        <eye>0,0,0</eye>
+        <target>-6,6,0</target>
+        <up>0,0,1</up>
+        <direction>1,0,0</direction>
+        <velocity>0.5,5</velocity>
+      </animation>
+      
+      <animation trajectory="rotate">
+        <eye>0,0,0</eye>
+        <target>0,0,-10</target>
+        <up>1,0,0</up>
+        <velocity>90</velocity>
+      </animation>
+      
+      <animation trajectory="rotate">
+        <eye>0,0,0</eye>
+        <target>1,1,0,</target>
+        <up>0,0,1</up>
+        <velocity>90</velocity>
+      </animation>
+      
+      <animation trajectory="rotate">
+        <eye>0,0,0</eye>
+        <target>0,1,-1</target>
+        <up>1,0,0</up>
+        <velocity>90</velocity>
+      </animation>
+      
+      <animation trajectory="approach">
+        <eye>0,0,0</eye>
+        <target>0,10,0</target>
+        <up>0,1,0</up>
+        <velocity>-2,2</velocity>
+      </animation>
+      
+      <animation trajectory="shift">
+        <eye>0,0,0</eye>
+        <target>-18,0,0</target>
+        <up>0,0,1</up>
+        <direction>[0,-1,0],[0,-1,1]</direction>
+        <velocity>90</velocity>
       </animation>
     </camera>
   </model>

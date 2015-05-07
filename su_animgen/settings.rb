@@ -86,10 +86,13 @@ module AnimationGenerator
   # ......................................
   # parameter list of different trajectory
   TRAJPARAM = Hash.new
-  TRAJPARAM["shift"]    = ["direction","velocity"]
-  TRAJPARAM["approach"] = ["velocity"]
-  TRAJPARAM["rotate"]   = ["velocity"]
-  TRAJPARAM["line"]     = ["direction","velocity"]
+  # add new type of trajectory should check consistancy
+  # - with 'packed?' function in tools.rb
+  TRAJPARAM["translate"] = ["direction","velocity"]
+  TRAJPARAM["shift"]     = ["direction","velocity"]
+  TRAJPARAM["approach"]  = ["velocity"]
+  TRAJPARAM["rotate"]    = ["velocity"]
+  TRAJPARAM["line"]      = ["direction","velocity"]
   # list of trajectory types
   TRAJTYPE = TRAJPARAM.keys
   # ......................................
