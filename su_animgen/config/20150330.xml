@@ -1,0 +1,418 @@
+<config name="TEST-20150330">
+  <texture name="PinkGaussian">pink_gaussian.png</texture>
+  <texture name="PinkUniform">pink_uniform.png</texture>
+
+  <model name="curvature-[0]">	
+    <surface type="rectangle">
+      <position>[7,0,0]</position>
+      <normal>[-1,0,0]</normal>
+      <width>15</width>
+      <height>15</height>
+      <orient>0</orient>
+      <texture>PinkGaussian</texture>
+    </surface>
+    <surface type="rectangle">
+      <position>[-7,0,0]</position>
+      <normal>[1,0,0]</normal>
+      <width>15</width>
+      <height>15</height>
+      <orient>0</orient>
+      <texture>PinkGaussian</texture>
+    </surface>
+    <surface type="rectangle">
+      <position>[0,7,0]</position>
+      <normal>[0,-1,0]</normal>
+      <width>15</width>
+      <height>15</height>
+      <orient>0</orient>
+      <texture>PinkGaussian</texture>
+    </surface>
+    <surface type="rectangle">
+      <position>[0,-7,0]</position>
+      <normal>[0,1,0]</normal>
+      <width>15</width>
+      <height>15</height>
+      <orient>0</orient>
+      <texture>PinkGaussian</texture>
+    </surface>
+    <surface type="rectangle">
+      <position>[0,0,7]</position>
+      <normal>[0,0,-1]</normal>
+      <width>15</width>
+      <height>15</height>
+      <orient>0</orient>
+      <texture>PinkGaussian</texture>
+    </surface>
+    <surface type="rectangle">
+      <position>[0,0,-7]</position>
+      <normal>[0,0,1]</normal>
+      <width>15</width>
+      <height>15</height>
+      <orient>0</orient>
+      <texture>PinkGaussian</texture>
+    </surface>
+    
+    <surface type="rectangle">
+      <position>[3.5,0,0]</position>
+      <normal>[-1,0,0]</normal>
+      <width>15</width>
+      <height>15</height>
+      <orient>0</orient>
+      <texture>PinkGaussian</texture>
+    </surface>
+    
+    <camera aspratio="1.0" fov="30" imwidth="35">
+      <animation trajectory="line">
+	<eye>[0,0,0]</eye>
+	<target>[3.5,0,0]</target>
+	<up>[0,0,1]</up>
+	<direction>[0,1,0],[0,0,1],[0,1,1]</direction>
+	<velocity>-3,3</velocity>
+      </animation>
+    </camera>
+  </model>
+  <model name="curvature-[0.1]">
+    <surface type="rectangle">
+      <position>[7,0,0]</position>
+      <normal>[-1,0,0]</normal>
+      <width>15</width>
+      <height>15</height>
+      <orient>0</orient>
+      <texture>PinkGaussian</texture>
+    </surface>
+    <surface type="rectangle">
+      <position>[-7,0,0]</position>
+      <normal>[1,0,0]</normal>
+      <width>15</width>
+      <height>15</height>
+      <orient>0</orient>
+      <texture>PinkGaussian</texture>
+    </surface>
+    <surface type="rectangle">
+      <position>[0,7,0]</position>
+      <normal>[0,-1,0]</normal>
+      <width>15</width>
+      <height>15</height>
+      <orient>0</orient>
+      <texture>PinkGaussian</texture>
+    </surface>
+    <surface type="rectangle">
+      <position>[0,-7,0]</position>
+      <normal>[0,1,0]</normal>
+      <width>15</width>
+      <height>15</height>
+      <orient>0</orient>
+      <texture>PinkGaussian</texture>
+    </surface>
+    <surface type="rectangle">
+      <position>[0,0,7]</position>
+      <normal>[0,0,-1]</normal>
+      <width>15</width>
+      <height>15</height>
+      <orient>0</orient>
+      <texture>PinkGaussian</texture>
+    </surface>
+    <surface type="rectangle">
+      <position>[0,0,-7]</position>
+      <normal>[0,0,1]</normal>
+      <width>15</width>
+      <height>15</height>
+      <orient>0</orient>
+      <texture>PinkGaussian</texture>
+    </surface>
+    
+    <surface type="Sphere" sym="plane">
+      <position>[3.5,0,0]</position>
+      <normal>[-1,0,0]</normal>
+      <curvature>0.1</curvature>
+      <angle>180</angle>
+      <texture>PinkGaussian</texture>
+      <orient>0</orient>
+      <symrange>15</symrange>
+    </surface>
+    <surface type="Sphere" sym="plane">
+      <position>[-3.5,0,0]</position>
+      <normal>[1,0,0]</normal>
+      <curvature>0.1</curvature>
+      <angle>180</angle>
+      <texture>PinkGaussian</texture>
+      <orient>90</orient>
+      <symrange>15</symrange>
+    </surface>
+    
+    <camera aspratio="1.0" fov="30" imwidth="35">
+      <animation trajectory="line">
+	<eye>[0,0,0]</eye>
+	<target>[3.5,0,0]</target>
+	<up>[0,0,1]</up>
+	<direction>[0,1,0],[0,0,1],[0,1,1]</direction>
+	<velocity>-3,3</velocity>
+      </animation>
+      <animation trajectory="line">
+	<eye>[0,0,0]</eye>
+	<target>[-3.5,0,0]</target>
+	<up>[0,0,1]</up>
+	<direction>[0,1,0],[0,0,1],[0,1,1]</direction>
+	<velocity>-3,3</velocity>
+      </animation>
+    </camera>
+  </model>
+  <model name="curvature-[-0.1]">
+    <surface type="rectangle">
+      <position>[7,0,0]</position>
+      <normal>[-1,0,0]</normal>
+      <width>15</width>
+      <height>15</height>
+      <orient>0</orient>
+      <texture>PinkGaussian</texture>
+    </surface>
+    <surface type="rectangle">
+      <position>[-7,0,0]</position>
+      <normal>[1,0,0]</normal>
+      <width>15</width>
+      <height>15</height>
+      <orient>0</orient>
+      <texture>PinkGaussian</texture>
+    </surface>
+    <surface type="rectangle">
+      <position>[0,7,0]</position>
+      <normal>[0,-1,0]</normal>
+      <width>15</width>
+      <height>15</height>
+      <orient>0</orient>
+      <texture>PinkGaussian</texture>
+    </surface>
+    <surface type="rectangle">
+      <position>[0,-7,0]</position>
+      <normal>[0,1,0]</normal>
+      <width>15</width>
+      <height>15</height>
+      <orient>0</orient>
+      <texture>PinkGaussian</texture>
+    </surface>
+    <surface type="rectangle">
+      <position>[0,0,7]</position>
+      <normal>[0,0,-1]</normal>
+      <width>15</width>
+      <height>15</height>
+      <orient>0</orient>
+      <texture>PinkGaussian</texture>
+    </surface>
+    <surface type="rectangle">
+      <position>[0,0,-7]</position>
+      <normal>[0,0,1]</normal>
+      <width>15</width>
+      <height>15</height>
+      <orient>0</orient>
+      <texture>PinkGaussian</texture>
+    </surface>
+    
+    <surface type="Sphere" sym="plane">
+      <position>[3.5,0,0]</position>
+      <normal>[-1,0,0]</normal>
+      <curvature>-0.1</curvature>
+      <angle>180</angle>
+      <texture>PinkGaussian</texture>
+      <orient>0</orient>
+      <symrange>15</symrange>
+    </surface>
+    <surface type="Sphere" sym="plane">
+      <position>[-3.5,0,0]</position>
+      <normal>[1,0,0]</normal>
+      <curvature>-0.1</curvature>
+      <angle>180</angle>
+      <texture>PinkGaussian</texture>
+      <orient>90</orient>
+      <symrange>15</symrange>
+    </surface>
+    
+    <camera aspratio="1.0" fov="30" imwidth="35">
+      <animation trajectory="line">
+	<eye>[0,0,0]</eye>
+	<target>[3.5,0,0]</target>
+	<up>[0,0,1]</up>
+	<direction>[0,1,0],[0,0,1],[0,1,1]</direction>
+	<velocity>-3,3</velocity>
+      </animation>
+      <animation trajectory="line">
+	<eye>[0,0,0]</eye>
+	<target>[-3.5,0,0]</target>
+	<up>[0,0,1]</up>
+	<direction>[0,1,0],[0,0,1],[0,1,1]</direction>
+	<velocity>-3,3</velocity>
+      </animation>
+    </camera>
+  </model>
+  <model name="curvature-[0.3]">
+    <surface type="rectangle">
+      <position>[7,0,0]</position>
+      <normal>[-1,0,0]</normal>
+      <width>15</width>
+      <height>15</height>
+      <orient>0</orient>
+      <texture>PinkGaussian</texture>
+    </surface>
+    <surface type="rectangle">
+      <position>[-7,0,0]</position>
+      <normal>[1,0,0]</normal>
+      <width>15</width>
+      <height>15</height>
+      <orient>0</orient>
+      <texture>PinkGaussian</texture>
+    </surface>
+    <surface type="rectangle">
+      <position>[0,7,0]</position>
+      <normal>[0,-1,0]</normal>
+      <width>15</width>
+      <height>15</height>
+      <orient>0</orient>
+      <texture>PinkGaussian</texture>
+    </surface>
+    <surface type="rectangle">
+      <position>[0,-7,0]</position>
+      <normal>[0,1,0]</normal>
+      <width>15</width>
+      <height>15</height>
+      <orient>0</orient>
+      <texture>PinkGaussian</texture>
+    </surface>
+    <surface type="rectangle">
+      <position>[0,0,7]</position>
+      <normal>[0,0,-1]</normal>
+      <width>15</width>
+      <height>15</height>
+      <orient>0</orient>
+      <texture>PinkGaussian</texture>
+    </surface>
+    <surface type="rectangle">
+      <position>[0,0,-7]</position>
+      <normal>[0,0,1]</normal>
+      <width>15</width>
+      <height>15</height>
+      <orient>0</orient>
+      <texture>PinkGaussian</texture>
+    </surface>
+    
+    <surface type="Sphere" sym="plane">
+      <position>[3.5,0,0]</position>
+      <normal>[-1,0,0]</normal>
+      <curvature>0.3</curvature>
+      <angle>180</angle>
+      <texture>PinkGaussian</texture>
+      <orient>0</orient>
+      <symrange>15</symrange>
+    </surface>
+    <surface type="Sphere" sym="plane">
+      <position>[-3.5,0,0]</position>
+      <normal>[1,0,0]</normal>
+      <curvature>0.3</curvature>
+      <angle>180</angle>
+      <texture>PinkGaussian</texture>
+      <orient>90</orient>
+      <symrange>15</symrange>
+    </surface>
+    
+    <camera aspratio="1.0" fov="30" imwidth="35">
+      <animation trajectory="line">
+	<eye>[0,0,0]</eye>
+	<target>[3.5,0,0]</target>
+	<up>[0,0,1]</up>
+	<direction>[0,1,0],[0,0,1],[0,1,1]</direction>
+	<velocity>-3,3</velocity>
+      </animation>
+      <animation trajectory="line">
+	<eye>[0,0,0]</eye>
+	<target>[-3.5,0,0]</target>
+	<up>[0,0,1]</up>
+	<direction>[0,1,0],[0,0,1],[0,1,1]</direction>
+	<velocity>-3,3</velocity>
+      </animation>
+    </camera>
+  </model>
+  <model name="curvature-[-0.3]">
+    <surface type="rectangle">
+      <position>[7,0,0]</position>
+      <normal>[-1,0,0]</normal>
+      <width>15</width>
+      <height>15</height>
+      <orient>0</orient>
+      <texture>PinkGaussian</texture>
+    </surface>
+    <surface type="rectangle">
+      <position>[-7,0,0]</position>
+      <normal>[1,0,0]</normal>
+      <width>15</width>
+      <height>15</height>
+      <orient>0</orient>
+      <texture>PinkGaussian</texture>
+    </surface>
+    <surface type="rectangle">
+      <position>[0,7,0]</position>
+      <normal>[0,-1,0]</normal>
+      <width>15</width>
+      <height>15</height>
+      <orient>0</orient>
+      <texture>PinkGaussian</texture>
+    </surface>
+    <surface type="rectangle">
+      <position>[0,-7,0]</position>
+      <normal>[0,1,0]</normal>
+      <width>15</width>
+      <height>15</height>
+      <orient>0</orient>
+      <texture>PinkGaussian</texture>
+    </surface>
+    <surface type="rectangle">
+      <position>[0,0,7]</position>
+      <normal>[0,0,-1]</normal>
+      <width>15</width>
+      <height>15</height>
+      <orient>0</orient>
+      <texture>PinkGaussian</texture>
+    </surface>
+    <surface type="rectangle">
+      <position>[0,0,-7]</position>
+      <normal>[0,0,1]</normal>
+      <width>15</width>
+      <height>15</height>
+      <orient>0</orient>
+      <texture>PinkGaussian</texture>
+    </surface>
+    
+    <surface type="Sphere" sym="plane">
+      <position>[3.5,0,0]</position>
+      <normal>[-1,0,0]</normal>
+      <curvature>-0.3</curvature>
+      <angle>180</angle>
+      <texture>PinkGaussian</texture>
+      <orient>0</orient>
+      <symrange>15</symrange>
+    </surface>
+    <surface type="Sphere" sym="plane">
+      <position>[-3.5,0,0]</position>
+      <normal>[1,0,0]</normal>
+      <curvature>-0.3</curvature>
+      <angle>180</angle>
+      <texture>PinkGaussian</texture>
+      <orient>90</orient>
+      <symrange>15</symrange>
+    </surface>
+    
+    <camera aspratio="1.0" fov="30" imwidth="35">
+      <animation trajectory="line">
+	<eye>[0,0,0]</eye>
+	<target>[3.5,0,0]</target>
+	<up>[0,0,1]</up>
+	<direction>[0,1,0],[0,0,1],[0,1,1]</direction>
+	<velocity>-3,3</velocity>
+      </animation>
+      <animation trajectory="line">
+	<eye>[0,0,0]</eye>
+	<target>[-3.5,0,0]</target>
+	<up>[0,0,1]</up>
+	<direction>[0,1,0],[0,0,1],[0,1,1]</direction>
+	<velocity>-3,3</velocity>
+      </animation>
+    </camera>
+  </model>
+</config>

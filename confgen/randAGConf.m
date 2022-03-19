@@ -13,27 +13,27 @@ function dom = randAGConf(nmodel, texturePath)
 MINRADIUS = 3;
 MAXRADIUS = 10;
 MAXCURVATURE = 5;
+MINGAUSSHEIGHT = 1;
 MAXGAUSSHEIGHT = 5;
 AREACENTER = [0,0,9];
 AREARANGE = 7;
 MINVELOCITY = 1;
-MAXVELOCITY = 5;
+MAXVELOCITY = 3;
 MINANGLEV = 15;
-MAXANGLEV = 360;
+MAXANGLEV = 90;
+ACCURACY = 0.1;
 
 % set of symmetic, curve, and trajectory types
-symSet  = {'plane', 'axis'};
-curvSet = {'Gaussian', 'Sphere', 'Circle', 'Rectangle'};
-trajSet = {'line', 'rotate', 'approach', 'shift'};
+symSet.var   = {'plane', 'axis'};
+symSet.prob  = [0.5,1.0];
+curvSet.var  = {'Gaussian', 'Sphere', 'Circle', 'Rectangle'};
+curvSet.prob = [0.5, 0.8, 0.9, 1.0];
+trajSet.var  = {'line', 'rotate', 'approach', 'shift', 'translate'};
+trajSet.prob = [0.2, 0.4, 0.6, 0.8, 1.0];
 
 % specified set for practice
-limitTrajSet = {'line'};
-majorCurvSet = {'Gaussian', 'Sphere'};
-minorCurvSet = {'Circle', 'Rectangle'};
-envTextureSet = {'PINK_GAUSSIAN', 'PINK_UNIFORM'};
-objTextureSet = {'COW_LOWCORR', 'COW_HIGHCORR'};
-% related settings
-majorPortion = 0.7;
+% envTextureSet = {'PINK_GAUSSIAN', 'PINK_UNIFORM'};
+% objTextureSet = {'COW_LOWCORR', 'COW_HIGHCORR'};
 
 % initialize a DOM object
 dom = com.mathworks.xml.XMLUtils.createDocument('config');
@@ -77,12 +77,15 @@ end
 
 % define set of helper functions
 chooseOne = @(S) S{ceil(rand() * numel(S))};
+chooseOnProb = @(S) S.var{find(rand() <= S.prob, 1)};
 normvec = @(vec) vec / norm(vec(:));
 randDirection = @() normvec(randn(1,3));
-randPosition = @(center, radius) ...
-    center + randDirection() * rand() * radius;
-randPositive = @(lowBound, upBound) ...
-    lowBound + (upBound - lowBound) * rand();
+randPosition = @(center, radius) round( ...
+    (center + randDirection() * rand() * radius) / ACCURACY) * ACCURACY;
+randPositive = @(lowBound, upBound) round( ...
+    (lowBound + (upBound - lowBound) * rand()) / ACCURACY) * ACCURACY;
+randRange = @(lowBound, upBound) ...
+    chooseOne({-1.0,1.0}) * randPositive(lowBound, upBound);
 
 % add a surface library as environment
 surflibNode = dom.createElement('surflib');
@@ -93,7 +96,7 @@ addChildNode(dom, surflibNode, 'normal', [0,0,1]);
 addChildNode(dom, surflibNode, 'width', 100);
 addChildNode(dom, surflibNode, 'height', 100);
 addChildNode(dom, surflibNode, 'orient', 0);
-addChildNode(dom, surflibNode, 'texture', chooseOne(envTextureSet));
+addChildNode(dom, surflibNode, 'texture', chooseOne(textureSet));
 rootNode.appendChild(surflibNode);
 
 % creat NMODEL model nodes randomly
@@ -112,11 +115,7 @@ for i = 1 : nmodel
     % create surface branch
     surfNode = dom.createElement('surface');
     % randomly set surface curve type
-    if rand() < majorPortion
-        curvType = chooseOne(majorCurvSet);
-    else
-        curvType = chooseOne(minorCurvSet);
-    end
+    curvType = chooseOnProb(curvSet);
     surfNode.setAttribute('type', curvType);
     % add common fields for all curve type
     surfPosition = randPosition(AREACENTER, AREARANGE);
@@ -125,20 +124,27 @@ for i = 1 : nmodel
     % create surface configuration according to surface type
     switch curvType
         case 'Gaussian'
-            symType = chooseOne(symSet);
+            symType = chooseOnProb(symSet);
             addChildNode(dom, surfNode, 'curvature', ...
-                chooseOne({-1.0,1.0}) * randPositive(0, MAXCURVATURE));
+                randRange(0, MAXCURVATURE));
             addChildNode(dom, surfNode, 'height', ...
-                randPositive(0, MAXGAUSSHEIGHT));
+                randPositive(MINGAUSSHEIGHT, MAXGAUSSHEIGHT));
             addChildNode(dom, surfNode, 'radius', ...
                 randPositive(MINRADIUS, MAXRADIUS));
             
         case 'Sphere'
-            symType = chooseOne(symSet);
+            symType = chooseOnProb(symSet);
             addChildNode(dom, surfNode, 'curvature', ...
-                chooseOne({-1.0,1.0}) * randPositive(0, MAXCURVATURE));
+                randRange(0, MAXCURVATURE));
             addChildNode(dom, surfNode, 'angle', ...
                 chooseOne({90, 180, 270, 360}));
+            
+        case 'Donut'
+            symType = chooseOnProb(symSet);
+            addChildNode(dom, surfNode, 'offset', ...
+                randPositive(MINRADIUS, MAXRADIUS));
+            addChildNode(dom, surfNode, 'radius', ...
+                randPositive(1, MINRADIUS));
             
         case 'Circle'
             symType = 'axis';
@@ -172,7 +178,7 @@ for i = 1 : nmodel
             error('Unrecognized Symmetric Type : %s\n', symType);
     end
     % add texture field
-    addChildNode(dom, surfNode, 'texture', chooseOne(objTextureSet));
+    addChildNode(dom, surfNode, 'texture', chooseOne(textureSet));
     % append surface node to model
     modelNode.appendChild(surfNode);
     
@@ -190,10 +196,15 @@ for i = 1 : nmodel
     % set up direction to [0,0,1]
     addChildNode(dom, animNode, 'up', [0,0,1]);
     % set trajectory type
-    trajType = chooseOne(limitTrajSet);
+    trajType = chooseOnProb(trajSet);
     animNode.setAttribute('trajectory', trajType);
     % add fields according to trajectory type
     switch trajType
+        case 'translate'
+            addChildNode(dom, animNode, 'direction', randDirection());
+            addChildNode(dom, animNode, 'velocity', ...
+                randPositive(MINANGLEV, MAXANGLEV));
+            
         case 'shift'
             addChildNode(dom, animNode, 'direction', randDirection());
             addChildNode(dom, animNode, 'velocity', ...
@@ -201,11 +212,11 @@ for i = 1 : nmodel
             
         case 'approach'
             addChildNode(dom, animNode, 'velocity', ...
-                randPositive(MINVELOCITY, MAXVELOCITY));
+                randRange(MINVELOCITY, MAXVELOCITY));
             
         case 'rotate'
             addChildNode(dom, animNode, 'velocity', ...
-                randPositive(MINANGLEV, MAXANGLEV));
+                randRange(MINANGLEV, MAXANGLEV));
             
         case 'line'
             addChildNode(dom, animNode, 'direction', randDirection());

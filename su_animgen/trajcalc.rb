@@ -83,8 +83,7 @@ module AnimationGenerator
       v = params["velocity"] / 180.0 * Math::PI
       t = ind.to_f / FRAMERATE
       # calculate new up direction of camera by rotation
-      cur_up = Sketchup.active_model.active_view.camera.up
-      up = cur_up.transform(Geom::Transformation.rotation(
+      up = up.transform(Geom::Transformation.rotation(
             Geom::Point3d.new([0,0,0]), target-eye, v * t))
       # return new status of camera
       return eye, target, up

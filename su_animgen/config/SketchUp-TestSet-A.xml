@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config name="14-May-2015 11:45:26">
+   <texture name="COW_HIGHCORR">/Users/MooGu/Library/Application Support/SketchUp 2015/SketchUp/Plugins/su_animgen/texture/cow_highcorr.jpg</texture>
+   <texture name="COW_LOWCORR">/Users/MooGu/Library/Application Support/SketchUp 2015/SketchUp/Plugins/su_animgen/texture/cow_lowcorr.jpg</texture>
+   <texture name="PINK_GAUSSIAN">/Users/MooGu/Library/Application Support/SketchUp 2015/SketchUp/Plugins/su_animgen/texture/pink_gaussian.png</texture>
+   <texture name="PINK_UNIFORM">/Users/MooGu/Library/Application Support/SketchUp 2015/SketchUp/Plugins/su_animgen/texture/pink_uniform.png</texture>
+   <surflib name="ENVIRONMENT" type="Rectangle">
+      <position>[0,0,0]</position>
+      <normal>[0,0,1]</normal>
+      <width>100</width>
+      <height>100</height>
+      <orient>0</orient>
+      <texture>PINK_UNIFORM</texture>
+   </surflib>
+   <model name="RANDOM-1">
+      <surface name="ENVIRONMENT"/>
+      <surface sym="axis" type="Sphere">
+         <position>[3.1,0,9.4]</position>
+         <normal>[-0.83894,-0.024794,0.54366]</normal>
+         <curvature>-1</curvature>
+         <angle>270</angle>
+         <texture>COW_HIGHCORR</texture>
+      </surface>
+      <camera>
+         <animation trajectory="line">
+            <eye>[-0.1,-0.3,9.5]</eye>
+            <target>[3.1,0,9.4]</target>
+            <up>[0,0,1]</up>
+            <direction>[-0.88062,-0.42386,0.21179]</direction>
+            <velocity>2.1</velocity>
+         </animation>
+      </camera>
+   </model>
+   <model name="RANDOM-2">
+      <surface name="ENVIRONMENT"/>
+      <surface sym="axis" type="Gaussian">
+         <position>[0.3,0.2,9.2]</position>
+         <normal>[0.37473,0.23612,0.89656]</normal>
+         <curvature>2.6</curvature>
+         <height>1.7</height>
+         <radius>5.8</radius>
+         <texture>COW_LOWCORR</texture>
+      </surface>
+      <camera>
+         <animation trajectory="rotate">
+            <eye>[-1.2,1.2,7.8]</eye>
+            <target>[0.3,0.2,9.2]</target>
+            <up>[0,0,1]</up>
+            <velocity>-63.6</velocity>
+         </animation>
+      </camera>
+   </model>
+   <model name="RANDOM-3">
+      <surface name="ENVIRONMENT"/>
+      <surface sym="axis" type="Gaussian">
+         <position>[0.6,0.1,11.4]</position>
+         <normal>[-0.073926,-0.64392,-0.76151]</normal>
+         <curvature>-4.5</curvature>
+         <height>1.5</height>
+         <radius>9.9</radius>
+         <texture>COW_HIGHCORR</texture>
+      </surface>
+      <camera>
+         <animation trajectory="translate">
+            <eye>[5.2,-1.1,8.2]</eye>
+            <target>[0.6,0.1,11.4]</target>
+            <up>[0,0,1]</up>
+            <direction>[-0.51082,-0.69889,-0.50061]</direction>
+            <velocity>1.1</velocity>
+         </animation>
+      </camera>
+   </model>
+   <model name="RANDOM-4">
+      <surface name="ENVIRONMENT"/>
+      <surface sym="plane" type="Sphere">
+         <position>[-1.8,-1.6,3.1]</position>
+         <normal>[0.39398,-0.080356,0.9156]</normal>
+         <curvature>3.7</curvature>
+         <angle>270</angle>
+         <orient>66.3</orient>
+         <symrange>7.2</symrange>
+         <texture>COW_LOWCORR</texture>
+      </surface>
+      <camera>
+         <animation trajectory="rotate">
+            <eye>[-0.2,-0.3,9.3]</eye>
+            <target>[-1.8,-1.6,3.1]</target>
+            <up>[0,0,1]</up>
+            <velocity>-48.1</velocity>
+         </animation>
+      </camera>
+   </model>
+   <model name="RANDOM-5">
+      <surface name="ENVIRONMENT"/>
+      <surface sym="plane" type="Gaussian">
+         <position>[1.4,-1,7.7]</position>
+         <normal>[-0.10755,-0.16407,0.98057]</normal>
+         <curvature>-0.3</curvature>
+         <height>2.2</height>
+         <radius>3.3</radius>
+         <orient>182</orient>
+         <symrange>8.3</symrange>
+         <texture>COW_HIGHCORR</texture>
+      </surface>
+      <camera>
+         <animation trajectory="approach">
+            <eye>[-1.9,-4.5,13]</eye>
+            <target>[1.4,-1,7.7]</target>
+            <up>[0,0,1]</up>
+            <velocity>-2.7</velocity>
+         </animation>
+      </camera>
+   </model>
+   <model name="RANDOM-6">
+      <surface name="ENVIRONMENT"/>
+      <surface sym="axis" type="Gaussian">
+         <position>[-0.1,0.2,8.7]</position>
+         <normal>[0.71455,0.68067,0.1616]</normal>
+         <curvature>3.9</curvature>
+         <height>2.2</height>
+         <radius>7.8</radius>
+         <texture>COW_HIGHCORR</texture>
+      </surface>
+      <camera>
+         <animation trajectory="shift">
+            <eye>[-0.8,-1.9,10.1]</eye>
+            <target>[-0.1,0.2,8.7]</target>
+            <up>[0,0,1]</up>
+            <direction>[0.35282,-0.42604,-0.83307]</direction>
+            <velocity>2.1</velocity>
+         </animation>
+      </camera>
+   </model>
+   <model name="RANDOM-7">
+      <surface name="ENVIRONMENT"/>
+      <surface sym="axis" type="Gaussian">
+         <position>[0.2,0.2,9.2]</position>
+         <normal>[-0.56614,-0.76735,0.3011]</normal>
+         <curvature>0.7</curvature>
+         <height>3.9</height>
+         <radius>3.8</radius>
+         <texture>COW_LOWCORR</texture>
+      </surface>
+      <camera>
+         <animation trajectory="approach">
+            <eye>[3.4,-3.7,10.5]</eye>
+            <target>[0.2,0.2,9.2]</target>
+            <up>[0,0,1]</up>
+            <velocity>1.5</velocity>
+         </animation>
+      </camera>
+   </model>
+   <model name="RANDOM-8">
+      <surface name="ENVIRONMENT"/>
+      <surface sym="axis" type="Sphere">
+         <position>[2,0.5,7.5]</position>
+         <normal>[-0.66429,0.50892,0.54746]</normal>
+         <curvature>-1</curvature>
+         <angle>90</angle>
+         <texture>COW_HIGHCORR</texture>
+      </surface>
+      <camera>
+         <animation trajectory="shift">
+            <eye>[-1.6,-0.2,9.2]</eye>
+            <target>[2,0.5,7.5]</target>
+            <up>[0,0,1]</up>
+            <direction>[-0.0747,-0.98278,0.16901]</direction>
+            <velocity>1.2</velocity>
+         </animation>
+      </camera>
+   </model>
+   <model name="RANDOM-9">
+      <surface name="ENVIRONMENT"/>
+      <surface sym="plane" type="Gaussian">
+         <position>[-1,0.1,6.4]</position>
+         <normal>[-0.43616,-0.73174,0.52375]</normal>
+         <curvature>4.8</curvature>
+         <height>2.7</height>
+         <radius>7.9</radius>
+         <orient>272.9</orient>
+         <symrange>6</symrange>
+         <texture>COW_HIGHCORR</texture>
+      </surface>
+      <camera>
+         <animation trajectory="shift">
+            <eye>[-1.2,1.1,8.1]</eye>
+            <target>[-1,0.1,6.4]</target>
+            <up>[0,0,1]</up>
+            <direction>[-0.10799,0.77283,-0.62536]</direction>
+            <velocity>1.5</velocity>
+         </animation>
+      </camera>
+   </model>
+   <model name="RANDOM-10">
+      <surface name="ENVIRONMENT"/>
+      <surface sym="axis" type="Gaussian">
+         <position>[3.7,-1.7,7.8]</position>
+         <normal>[-0.72215,-0.37113,0.58375]</normal>
+         <curvature>-0.7</curvature>
+         <height>1.4</height>
+         <radius>3.1</radius>
+         <texture>COW_LOWCORR</texture>
+      </surface>
+      <camera>
+         <animation trajectory="shift">
+            <eye>[0.2,0.7,9.1]</eye>
+            <target>[3.7,-1.7,7.8]</target>
+            <up>[0,0,1]</up>
+            <direction>[-0.71015,-0.58212,-0.39601]</direction>
+            <velocity>1.3</velocity>
+         </animation>
+      </camera>
+   </model>
+   <model name="RANDOM-11">
+      <surface name="ENVIRONMENT"/>
+      <surface sym="axis" type="Gaussian">
+         <position>[-1.3,-0.4,8.3]</position>
+         <normal>[-0.34365,0.84168,0.41651]</normal>
+         <curvature>-1.1</curvature>
+         <height>1.3</height>
+         <radius>9.4</radius>
+         <texture>COW_HIGHCORR</texture>
+      </surface>
+      <camera>
+         <animation trajectory="translate">
+            <eye>[0.7,-2.8,5.7]</eye>
+            <target>[-1.3,-0.4,8.3]</target>
+            <up>[0,0,1]</up>
+            <direction>[-0.96542,-0.25621,-0.048057]</direction>
+            <velocity>1.1</velocity>
+         </animation>
+      </camera>
+   </model>
+   <model name="RANDOM-12">
+      <surface name="ENVIRONMENT"/>
+      <surface sym="axis" type="Sphere">
+         <position>[-0.9,4.2,8.1]</position>
+         <normal>[-0.65292,-0.35712,-0.66795]</normal>
+         <curvature>1.8</curvature>
+         <angle>270</angle>
+         <texture>COW_LOWCORR</texture>
+      </surface>
+      <camera>
+         <animation trajectory="rotate">
+            <eye>[0.2,2.3,9.2]</eye>
+            <target>[-0.9,4.2,8.1]</target>
+            <up>[0,0,1]</up>
+            <velocity>-46.7</velocity>
+         </animation>
+      </camera>
+   </model>
+   <model name="RANDOM-13">
+      <surface name="ENVIRONMENT"/>
+      <surface sym="plane" type="Gaussian">
+         <position>[0.4,2.9,8.4]</position>
+         <normal>[-0.80996,-0.28495,-0.5126]</normal>
+         <curvature>4.8</curvature>
+         <height>4.7</height>
+         <radius>6.2</radius>
+         <orient>86.6</orient>
+         <symrange>8.3</symrange>
+         <texture>COW_HIGHCORR</texture>
+      </surface>
+      <camera>
+         <animation trajectory="approach">
+            <eye>[2,2,5.2]</eye>
+            <target>[0.4,2.9,8.4]</target>
+            <up>[0,0,1]</up>
+            <velocity>-1.2</velocity>
+         </animation>
+      </camera>
+   </model>
+   <model name="RANDOM-14">
+      <surface name="ENVIRONMENT"/>
+      <surface sym="axis" type="Circle">
+         <position>[-3.4,-5.2,9.9]</position>
+         <normal>[0.025867,0.31207,-0.94971]</normal>
+         <radius>9.7</radius>
+         <texture>COW_HIGHCORR</texture>
+      </surface>
+      <camera>
+         <animation trajectory="line">
+            <eye>[2,-3.6,12.2]</eye>
+            <target>[-3.4,-5.2,9.9]</target>
+            <up>[0,0,1]</up>
+            <direction>[0.085398,-0.96829,0.23476]</direction>
+            <velocity>1.8</velocity>
+         </animation>
+      </camera>
+   </model>
+   <model name="RANDOM-15">
+      <surface name="ENVIRONMENT"/>
+      <surface sym="axis" type="Gaussian">
+         <position>[-5.1,-1.6,12.8]</position>
+         <normal>[-0.37998,0.77842,0.49967]</normal>
+         <curvature>-1.3</curvature>
+         <height>4</height>
+         <radius>4.6</radius>
+         <texture>COW_LOWCORR</texture>
+      </surface>
+      <camera>
+         <animation trajectory="approach">
+            <eye>[3,1.5,12]</eye>
+            <target>[-5.1,-1.6,12.8]</target>
+            <up>[0,0,1]</up>
+            <velocity>-2.6</velocity>
+         </animation>
+      </camera>
+   </model>
+   <model name="RANDOM-16">
+      <surface name="ENVIRONMENT"/>
+      <surface sym="plane" type="Gaussian">
+         <position>[2.9,1.9,9.7]</position>
+         <normal>[0.10307,0.99417,-0.031696]</normal>
+         <curvature>3.2</curvature>
+         <height>2.4</height>
+         <radius>10</radius>
+         <orient>80.7</orient>
+         <symrange>7.6</symrange>
+         <texture>COW_HIGHCORR</texture>
+      </surface>
+      <camera>
+         <animation trajectory="line">
+            <eye>[-1,-1.4,6.6]</eye>
+            <target>[2.9,1.9,9.7]</target>
+            <up>[0,0,1]</up>
+            <direction>[0.33906,-0.16626,0.92596]</direction>
+            <velocity>2.5</velocity>
+         </animation>
+      </camera>
+   </model>
+   <model name="RANDOM-17">
+      <surface name="ENVIRONMENT"/>
+      <surface sym="axis" type="Sphere">
+         <position>[-1.1,4.5,4.5]</position>
+         <normal>[-0.65012,-0.38896,-0.65273]</normal>
+         <curvature>-0.2</curvature>
+         <angle>270</angle>
+         <texture>COW_LOWCORR</texture>
+      </surface>
+      <camera>
+         <animation trajectory="translate">
+            <eye>[0.1,-0.1,9.1]</eye>
+            <target>[-1.1,4.5,4.5]</target>
+            <up>[0,0,1]</up>
+            <direction>[0.8017,0.44951,0.39398]</direction>
+            <velocity>1.8</velocity>
+         </animation>
+      </camera>
+   </model>
+   <model name="RANDOM-18">
+      <surface name="ENVIRONMENT"/>
+      <surface sym="axis" type="Sphere">
+         <position>[0.5,0.2,7.3]</position>
+         <normal>[-0.17821,-0.49009,0.85326]</normal>
+         <curvature>-2.7</curvature>
+         <angle>90</angle>
+         <texture>COW_HIGHCORR</texture>
+      </surface>
+      <camera>
+         <animation trajectory="shift">
+            <eye>[0.1,-0.1,9.1]</eye>
+            <target>[0.5,0.2,7.3]</target>
+            <up>[0,0,1]</up>
+            <direction>[0.43106,0.057735,0.90048]</direction>
+            <velocity>2.8</velocity>
+         </animation>
+      </camera>
+   </model>
+   <model name="RANDOM-19">
+      <surface name="ENVIRONMENT"/>
+      <surface sym="plane" type="Sphere">
+         <position>[-0.3,-0.1,8.9]</position>
+         <normal>[-0.47169,0.032705,0.88116]</normal>
+         <curvature>-4.9</curvature>
+         <angle>360</angle>
+         <orient>243.6</orient>
+         <symrange>9.9</symrange>
+         <texture>COW_HIGHCORR</texture>
+      </surface>
+      <camera>
+         <animation trajectory="shift">
+            <eye>[-1.2,1.4,8]</eye>
+            <target>[-0.3,-0.1,8.9]</target>
+            <up>[0,0,1]</up>
+            <direction>[0.19104,-0.52996,0.82622]</direction>
+            <velocity>2.5</velocity>
+         </animation>
+      </camera>
+   </model>
+   <model name="RANDOM-20">
+      <surface name="ENVIRONMENT"/>
+      <surface sym="axis" type="Sphere">
+         <position>[0.3,0.5,9.1]</position>
+         <normal>[0.46287,0.82887,-0.31421]</normal>
+         <curvature>-2.1</curvature>
+         <angle>90</angle>
+         <texture>COW_LOWCORR</texture>
+      </surface>
+      <camera>
+         <animation trajectory="line">
+            <eye>[-2.4,0.9,13.1]</eye>
+            <target>[0.3,0.5,9.1]</target>
+            <up>[0,0,1]</up>
+            <direction>[0.52989,0.45542,0.71541]</direction>
+            <velocity>1.1</velocity>
+         </animation>
+      </camera>
+   </model>
+   <model name="RANDOM-21">
+      <surface name="ENVIRONMENT"/>
+      <surface sym="plane" type="Gaussian">
+         <position>[0.4,0.9,7.4]</position>
+         <normal>[0.81351,-0.11994,0.56905]</normal>
+         <curvature>-4.1</curvature>
+         <height>4.1</height>
+         <radius>9.5</radius>
+         <orient>38.8</orient>
+         <symrange>4.3</symrange>
+         <texture>COW_LOWCORR</texture>
+      </surface>
+      <camera>
+         <animation trajectory="line">
+            <eye>[0,-0.3,9.6]</eye>
+            <target>[0.4,0.9,7.4]</target>
+            <up>[0,0,1]</up>
+            <direction>[0.14135,0.82129,-0.55272]</direction>
+            <velocity>1.4</velocity>
+         </animation>
+      </camera>
+   </model>
+   <model name="RANDOM-22">
+      <surface name="ENVIRONMENT"/>
+      <surface sym="axis" type="Gaussian">
+         <position>[-3.9,0,11]</position>
+         <normal>[-0.9517,-0.26759,-0.15055]</normal>
+         <curvature>2.4</curvature>
+         <height>4.6</height>
+         <radius>4</radius>
+         <texture>COW_LOWCORR</texture>
+      </surface>
+      <camera>
+         <animation trajectory="rotate">
+            <eye>[2.8,3,10.4]</eye>
+            <target>[-3.9,0,11]</target>
+            <up>[0,0,1]</up>
+            <velocity>24.4</velocity>
+         </animation>
+      </camera>
+   </model>
+   <model name="RANDOM-23">
+      <surface name="ENVIRONMENT"/>
+      <surface sym="axis" type="Sphere">
+         <position>[1.2,4.8,7.2]</position>
+         <normal>[0.6563,-0.74334,0.12928]</normal>
+         <curvature>1.7</curvature>
+         <angle>270</angle>
+         <texture>COW_LOWCORR</texture>
+      </surface>
+      <camera>
+         <animation trajectory="translate">
+            <eye>[4.6,-1.4,8.8]</eye>
+            <target>[1.2,4.8,7.2]</target>
+            <up>[0,0,1]</up>
+            <direction>[-0.203,0.92939,0.30827]</direction>
+            <velocity>2.9</velocity>
+         </animation>
+      </camera>
+   </model>
+   <model name="RANDOM-24">
+      <surface name="ENVIRONMENT"/>
+      <surface sym="axis" type="Gaussian">
+         <position>[-0.7,0.4,7.6]</position>
+         <normal>[0.67329,0.66856,0.31576]</normal>
+         <curvature>-1.7</curvature>
+         <height>2.8</height>
+         <radius>4.7</radius>
+         <texture>COW_HIGHCORR</texture>
+      </surface>
+      <camera>
+         <animation trajectory="translate">
+            <eye>[0.9,-0.2,9.2]</eye>
+            <target>[-0.7,0.4,7.6]</target>
+            <up>[0,0,1]</up>
+            <direction>[-0.82937,0.17861,-0.52938]</direction>
+            <velocity>2.6</velocity>
+         </animation>
+      </camera>
+   </model>
+   <model name="RANDOM-25">
+      <surface name="ENVIRONMENT"/>
+      <surface sym="plane" type="Sphere">
+         <position>[0,3.1,8.3]</position>
+         <normal>[0.90346,-0.38613,0.18621]</normal>
+         <curvature>2.9</curvature>
+         <angle>270</angle>
+         <orient>130</orient>
+         <symrange>7.3</symrange>
+         <texture>COW_HIGHCORR</texture>
+      </surface>
+      <camera>
+         <animation trajectory="approach">
+            <eye>[-1.3,-0.9,9.2]</eye>
+            <target>[0,3.1,8.3]</target>
+            <up>[0,0,1]</up>
+            <velocity>-1.5</velocity>
+         </animation>
+      </camera>
+   </model>
+   <model name="RANDOM-26">
+      <surface name="ENVIRONMENT"/>
+      <surface sym="plane" type="Gaussian">
+         <position>[-0.5,-0.6,8.7]</position>
+         <normal>[0.54409,-0.40078,0.73712]</normal>
+         <curvature>-1.7</curvature>
+         <height>3.9</height>
+         <radius>8.6</radius>
+         <orient>196.2</orient>
+         <symrange>7.8</symrange>
+         <texture>COW_HIGHCORR</texture>
+      </surface>
+      <camera>
+         <animation trajectory="shift">
+            <eye>[-0.8,-0.3,8]</eye>
+            <target>[-0.5,-0.6,8.7]</target>
+            <up>[0,0,1]</up>
+            <direction>[0.2985,0.95188,0.069369]</direction>
+            <velocity>1.1</velocity>
+         </animation>
+      </camera>
+   </model>
+   <model name="RANDOM-27">
+      <surface name="ENVIRONMENT"/>
+      <surface sym="axis" type="Rectangle">
+         <position>[6.2,-2.8,10.1]</position>
+         <normal>[0.47878,0.86665,-0.14028]</normal>
+         <width>6.3</width>
+         <height>6.9</height>
+         <orient>96.9</orient>
+         <texture>COW_HIGHCORR</texture>
+      </surface>
+      <camera>
+         <animation trajectory="approach">
+            <eye>[0,0.6,8.2]</eye>
+            <target>[6.2,-2.8,10.1]</target>
+            <up>[0,0,1]</up>
+            <velocity>-2.6</velocity>
+         </animation>
+      </camera>
+   </model>
+   <model name="RANDOM-28">
+      <surface name="ENVIRONMENT"/>
+      <surface sym="plane" type="Sphere">
+         <position>[1.2,-3.1,6.9]</position>
+         <normal>[-0.18376,0.68145,0.70842]</normal>
+         <curvature>4.5</curvature>
+         <angle>270</angle>
+         <orient>318.2</orient>
+         <symrange>9.6</symrange>
+         <texture>COW_HIGHCORR</texture>
+      </surface>
+      <camera>
+         <animation trajectory="approach">
+            <eye>[4,0.9,7.1]</eye>
+            <target>[1.2,-3.1,6.9]</target>
+            <up>[0,0,1]</up>
+            <velocity>-2.9</velocity>
+         </animation>
+      </camera>
+   </model>
+   <model name="RANDOM-29">
+      <surface name="ENVIRONMENT"/>
+      <surface sym="axis" type="Circle">
+         <position>[5.9,-0.6,10.2]</position>
+         <normal>[0.95511,0.10623,-0.27656]</normal>
+         <radius>7.6</radius>
+         <texture>COW_LOWCORR</texture>
+      </surface>
+      <camera>
+         <animation trajectory="approach">
+            <eye>[-1,1,14.5]</eye>
+            <target>[5.9,-0.6,10.2]</target>
+            <up>[0,0,1]</up>
+            <velocity>1.8</velocity>
+         </animation>
+      </camera>
+   </model>
+   <model name="RANDOM-30">
+      <surface name="ENVIRONMENT"/>
+      <surface sym="axis" type="Rectangle">
+         <position>[1.7,0.1,8.7]</position>
+         <normal>[0.27435,0.51207,0.81395]</normal>
+         <width>6.9</width>
+         <height>7.2</height>
+         <orient>53.6</orient>
+         <texture>COW_HIGHCORR</texture>
+      </surface>
+      <camera>
+         <animation trajectory="translate">
+            <eye>[-0.2,-1.1,14.2]</eye>
+            <target>[1.7,0.1,8.7]</target>
+            <up>[0,0,1]</up>
+            <direction>[-0.82936,0.35794,0.429]</direction>
+            <velocity>1.2</velocity>
+         </animation>
+      </camera>
+   </model>
+</config>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config name="30-Jan-2020 14:39:39">
+   <texture name="PINK_GAUSSIAN">/Users/MooGu/Dropbox/Code/Animation Generator/texture/pink_gaussian.png</texture>
+   <texture name="PINK_UNIFY">/Users/MooGu/Dropbox/Code/Animation Generator/texture/pink_unify.png</texture>
+   <surflib name="ENVIRONMENT" type="Rectangle">
+      <position>[0,0,0]</position>
+      <normal>[0,0,1]</normal>
+      <width>100</width>
+      <height>100</height>
+      <orient>0</orient>
+      <texture>PINK_UNIFY</texture>
+   </surflib>
+   <model name="RANDOM-1">
+      <surface name="ENVIRONMENT"/>
+      <surface sym="axis" type="Gaussian">
+         <position>[-0.1,0.5,8.6]</position>
+         <normal>[0.73808,-0.53553,-0.41043]</normal>
+         <curvature>-4.8</curvature>
+         <height>3.5</height>
+         <radius>6.6</radius>
+         <texture>PINK_GAUSSIAN</texture>
+      </surface>
+      <camera>
+         <animation trajectory="translate">
+            <eye>[1,-2.8,3.2]</eye>
+            <target>[-0.1,0.5,8.6]</target>
+            <up>[0,0,1]</up>
+            <direction>[-0.51975,0.8413,0.14853]</direction>
+            <velocity>36.7</velocity>
+         </animation>
+      </camera>
+   </model>
+   <model name="RANDOM-2">
+      <surface name="ENVIRONMENT"/>
+      <surface sym="axis" type="Rectangle">
+         <position>[2.7,-2.3,4.4]</position>
+         <normal>[-0.7281,-0.31394,-0.60935]</normal>
+         <width>4.1</width>
+         <height>9.8</height>
+         <orient>297.6</orient>
+         <texture>PINK_UNIFY</texture>
+      </surface>
+      <camera>
+         <animation trajectory="rotate">
+            <eye>[-1.6,4.2,10]</eye>
+            <target>[2.7,-2.3,4.4]</target>
+            <up>[0,0,1]</up>
+            <velocity>57.5</velocity>
+         </animation>
+      </camera>
+   </model>
+   <model name="RANDOM-3">
+      <surface name="ENVIRONMENT"/>
+      <surface sym="axis" type="Sphere">
+         <position>[-0.7,2.9,11.3]</position>
+         <normal>[0.99936,-0.035623,0.0014905]</normal>
+         <curvature>4.7</curvature>
+         <angle>90</angle>
+         <texture>PINK_UNIFY</texture>
+      </surface>
+      <camera>
+         <animation trajectory="rotate">
+            <eye>[-4.8,-2.1,8]</eye>
+            <target>[-0.7,2.9,11.3]</target>
+            <up>[0,0,1]</up>
+            <velocity>-24.8</velocity>
+         </animation>
+      </camera>
+   </model>
+</config>
